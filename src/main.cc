@@ -1,7 +1,18 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include "Editor.h"
 
-int main() {
+using namespace std;
 
-	std::cout << "hello word" << std::endl;
+int main(int argc, char* argv[]) {
+	
+	vector<string> args(argv+1,argv+argc);
+
+	vm::Editor editor(args);
+	int exitStatus = editor.run();
+	return exitStatus;
 }
+
+
+
