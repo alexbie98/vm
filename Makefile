@@ -2,15 +2,15 @@ CXX = g++
 CXXFLAGS = -std=c++14 -Wall -MMD -g 
 BUILDDIR = build
 SRCDIR = src
-EXEC = bin/vm.out
-OBJECTS = ${addprefix ${BUILDDIR}/, main.o, editor.o, model/state.o, model/stateviewable.o, view/view.o}
+EXEC = bin/vm
+OBJECTS = ${addprefix ${BUILDDIR}/, main.o, Editor.o, State.o, StateViewable.o, View.o, CursesView.o, Controller.o, CursesController.o, CursesWindow.o, CursesInstance.o}
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
 	${CXX} ${OBJECTS} -lncurses -o ${EXEC}
 
 ${BUILDDIR}/%.o: ${SRCDIR}/%.cc
-	${CXX} ${CXXFLAGS} -c -o $@ $<
+	${CXX} ${CXXFLAGS} -I/src -c -o $@ $<
 
 -include ${DEPENDS}
 

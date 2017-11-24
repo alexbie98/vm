@@ -1,7 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "view/State.h"
+#include "model/State.h"
 #include "view/CursesController.h"
 #include "view/CursesView.h"
 #include <string>
