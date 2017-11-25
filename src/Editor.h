@@ -1,8 +1,9 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "model/State.h"
-#include "view/CursesController.h"
+#include "curses/CursesInstance.h"
+#include "state/State.h"
+#include "controller/CursesController.h"
 #include "view/CursesView.h"
 #include <string>
 #include <vector>
@@ -14,6 +15,8 @@ class Editor {
 		std::unique_ptr<State> state;
 		std::unique_ptr<Controller> controller;
 		std::unique_ptr<View> view;
+		curses::CursesInstance cursesInstance;
+
 	public:
 		Editor(const std::vector<std::string>& args);
 
@@ -22,7 +25,7 @@ class Editor {
 		Editor(Editor&& other) = delete;
 		Editor& operator=(const Editor& other) = delete;
 		Editor& operator=(Editor&& other) = delete;
-		
+
 		int run();
 };
 

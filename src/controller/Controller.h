@@ -5,9 +5,9 @@
 namespace vm {
 
 class Controller {
-	
+
 	public:
-		virtual Input getInput() = 0;
+		virtual Input* getInput() = 0;
 };
 
 }

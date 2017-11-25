@@ -11,17 +11,16 @@ CursesInstance::CursesInstance(){
 }
 
 
-std::unique_ptr<CursesWindow> CursesInstance::makeCursesWindow(Posn pos, 
+std::unique_ptr<CursesWindow> CursesInstance::makeCursesWindow(Posn pos,
 		int width, int height) {
-	std::unique_ptr<CursesWindow> w = 
-		std::make_unique<CursesWindow>(
-				create_newwin(height, width, pos.second, pos.first));
+	// std::unique_ptr<CursesWindow> w =
+	// 	std::make_unique<CursesWindow>(
+	// 			create_newwin(height, width, pos.second, pos.first));
 	// window init stuff here
-	return w;
+	//return w;
 }
 
 char CursesInstance::getCh(){
-
 
 }
 

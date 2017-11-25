@@ -1,10 +1,9 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-
 namespace vm {
 
-template <typename T, typename EType> 
+template <typename T, typename EType>
 class Observer {
 	private:
 	public:

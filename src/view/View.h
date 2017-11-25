@@ -1,6 +1,6 @@
 #ifndef View_H
 #define View_H
-#include "data/Event"
+#include "data/Event.h"
 #include "state/State.h"
 
 namespace vm {

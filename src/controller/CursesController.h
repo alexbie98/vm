@@ -7,12 +7,12 @@
 namespace vm {
 
 class CursesController : public Controller{
-	
+
 	private:
 		curses::CursesInstance& cInst;
 	public:
 		CursesController(curses::CursesInstance& cInst): cInst{cInst} {}
-		Input getInput();
+		Input* getInput();
 
 };
 

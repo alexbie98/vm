@@ -13,5 +13,4 @@ int CursesWindow::getWidth(){
 	return 0;
 }
 
-		
-
+}
