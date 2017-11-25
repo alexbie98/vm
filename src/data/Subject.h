@@ -15,7 +15,7 @@ class Subject {
 	private:
 		std::vector<Observer<T,EType>* > obsList;
 	public:
-		virtual ~Subject();
+		virtual ~Subject(){};
 
 		//make this and the func below unqiue_ptr or const ptrs for pointer ownership?
 		void addObserver(Observer<T,EType>* obs){
