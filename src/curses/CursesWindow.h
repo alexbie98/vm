@@ -27,7 +27,14 @@ class CursesWindow {
 		bool setPos(size_t x, size_t y);
 		bool refresh();
 		bool setDrawColor(int color_number);
-		//void setDrawColor(size_t bg, size_t fg);
+		int getDrawColor();
+		bool enableAttribute(int attr);
+		bool disableAttribute(int attr);
+		// Draw string current color and attributes set
+		bool drawString(std::string s, int x, int y);
+		// Draw string specified color and current attributes set
+		bool drawString(std::string s, int x, int y, int color_number);
+
 
 	friend class CursesInstance;
 };

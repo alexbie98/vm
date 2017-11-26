@@ -44,12 +44,35 @@ bool CursesWindow::refresh(){
 	return wrefresh(rawWin) == OK;
 }
 
-bool setDrawColor(std::pair<size_t, size_t>){
-	return attron(COLOR_PAIR(1)) == OK;
+bool CursesWindow::setDrawColor(int color_number){
+	return wattron(rawWin, COLOR_PAIR(1)) == OK;
 }
 
-void setDrawColor(size_t bg, size_t fg){
+int CursesWindow::getDrawColor(){
+	int color_number;
+	wattr_get(rawWin, (int*)(0), &color_number, (int*)(0));
+	return color_number;
+}
 
+bool CursesWindow::enableAttribute(int attr){
+	return wattron(rawWin, attr) == OK;
+}
+
+bool CursesWindow::disableAttribute(int attr){
+	return wattroff(rawWin, attr) == OK;
+}
+
+bool CursesWindow::drawString(std::string s, int x, int y){
+	//return mvwprintw(rawWin, y, x, s.c_str()) == OK;
+	return mvwaddstr(rawWin, y, x, s.c_str()) == OK;
+}
+
+bool CursesWindow::drawString(std::string s, int x, int y, int color_number){
+	bool result;
+	wattron(rawWin, COLOR_PAIR(color_number));
+	result = mvwaddstr(rawWin, y, x, s.c_str()) == OK;
+	wattroff(rawWin, COLOR_PAIR(color_number));
+	return result;
 }
 
 }
