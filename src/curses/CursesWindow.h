@@ -1,7 +1,7 @@
 #ifndef CURSES_WINDOW_H
 #define CURSES_WINDOW_H
 
-#include "ncurses.h"
+#include <ncurses.h>
 #include <memory>
 #include <utility>
 #include "data/Posn.h"
@@ -11,20 +11,23 @@ namespace curses {
 class CursesWindow {
 
 	private:
-		WINDOW * rawWin;
+		WINDOW* rawWin;
 		CursesWindow(WINDOW* rawWin);
 	public:
 		~CursesWindow();
 
-		int getHeight();
-		int getWidth();
-		Posn getPos();
-		void setPos(Posn p);
-		void setPos(size_t x, size_t y);
-		void refresh();
-		std::pair<size_t, size_t> getDrawColor();
-		void setDrawColor(std::pair<size_t, size_t>);
-		void setDrawColor(size_t bg, size_t fg);
+		size_t getHeight();
+		size_t getWidth();
+		// //If window is a subwindow, returns windows origin relative to parent window
+		// Posn getRelativePos();
+		//Absolute screen coords of windows origin
+		Posn getAbsolutePos();
+		//Do not use to move subwindow
+		bool setPos(Posn p);
+		bool setPos(size_t x, size_t y);
+		bool refresh();
+		bool setDrawColor(int color_number);
+		//void setDrawColor(size_t bg, size_t fg);
 
 	friend class CursesInstance;
 };
@@ -34,4 +37,3 @@ class CursesWindow {
 
 
 #endif
-

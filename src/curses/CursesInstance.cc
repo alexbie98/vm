@@ -1,30 +1,33 @@
 #include "CursesInstance.h"
 
+using namespace std;
+
 namespace curses {
 
-void CursesInstance::init(){
-
+CursesInstance::CursesInstance(){
+	initscr();
+	start_color();
 }
 
-CursesInstance::CursesInstance(){
-	init();
+CursesInstance::~CursesInstance(){
+	endwin();
 }
 
 
 std::unique_ptr<CursesWindow> CursesInstance::makeCursesWindow(Posn pos,
 		int width, int height) {
-	// std::unique_ptr<CursesWindow> w =
-	// 	std::make_unique<CursesWindow>(
-	// 			create_newwin(height, width, pos.second, pos.first));
-	// window init stuff here
-	//return w;
+	std::unique_ptr<CursesWindow> w =
+		unique_ptr<CursesWindow>(new CursesWindow(newwin(height, width, pos.second, pos.first)));
+	//window init stuff here
+	return w;
 }
 
 char CursesInstance::getCh(){
 
 }
 
-
-
+void initColorPair(int color_number, int fg_color, int bg_color){
+	init_pair(color_number, fg_color, bg_color);
+}
 
 }
