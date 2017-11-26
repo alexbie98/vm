@@ -6,14 +6,14 @@
 
 namespace vm {
 
-class CursesController : public Controller{
+class CursesController : public Controller {
 
 	private:
 		curses::CursesInstance& cInst;
 	public:
-		CursesController(curses::CursesInstance& cInst): cInst{cInst} {}
-		Input* getInput(){};
-
+		CursesController(curses::CursesInstance& cInst);
+		std::unique_ptr<Input> getInput() override;
+		~CursesController() override;
 };
 
 }

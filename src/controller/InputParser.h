@@ -1,19 +1,24 @@
-#ifndef INPUT_H
-#define INPUT_H
+#ifndef INPUT_PARSER_H
+#define INPUT_PARSER_H
 #include <vector>
+#include <memory>
 
 namespace  vm {
 
 // forward declare
 class Action;
+class CursesInput;
 class Input;
 
 class InputParser {
 
 	private:
-		std::vector<Input> inputBuffer;	
+		std::vector<std::unique_ptr<Input>> inputBuffer;
 	public:
-		Action parseInput();
+		virtual std::unique_ptr<Action> 
+			parseInput(std::unique_ptr<CursesInput> in) = 0;
+
+		virtual ~InputParser() = 0;
 };
 
 }

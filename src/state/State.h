@@ -1,19 +1,25 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include <memory>
 #include <string>
-#include "StateViewable.h"
 #include "data/Event.h"
 #include "data/Subject.h"
-#include "controller/Input.h"
+
+
 namespace vm {
 
-class State: public StateViewable, public Subject<State,Event> {
+class Input;
 
-public:
-  void addFile(const std::string& file){};
-  bool isValid(){};
-  void handleInput(Input* input){};
+class State: public Subject<State,Event> {
+
+	public:
+		State();
+		~State() override;
+
+		void addFile(const std::string& file);
+		bool isValid();
+		void handleInput(std::unique_ptr<Input> input);
 };
 
 }

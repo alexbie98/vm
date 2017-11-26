@@ -10,8 +10,13 @@ namespace vm {
 
 class CursesView : public View {
 
-public:
-	void beNotified(Event event, State& subject){};
+	private:
+		curses::CursesInstance& cInst;
+
+	public:
+		CursesView(curses::CursesInstance& cInst);
+		~CursesView() override;
+		void beNotified(Event event, State& subject) override;
 
 };
 

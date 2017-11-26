@@ -2,8 +2,7 @@
 
 namespace curses {
 
-CursesWindow::~CursesWindow(){
-}
+CursesWindow::CursesWindow(WINDOW* rawWin): rawWin{rawWin} {}
 
 int CursesWindow::getHeight(){
 	return 0;

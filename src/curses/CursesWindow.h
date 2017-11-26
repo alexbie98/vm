@@ -11,8 +11,8 @@ namespace curses {
 class CursesWindow {
 
 	private:
-		std::unique_ptr<WINDOW> rawWin;
-		CursesWindow(WINDOW* rawWin): rawWin{rawWin} {}
+		WINDOW * rawWin;
+		CursesWindow(WINDOW* rawWin);
 	public:
 		~CursesWindow();
 

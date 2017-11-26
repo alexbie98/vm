@@ -3,8 +3,8 @@
 
 #include "curses/CursesInstance.h"
 #include "state/State.h"
-#include "controller/CursesController.h"
 #include "view/CursesView.h"
+#include "controller/CursesController.h"
 #include <string>
 #include <vector>
 #include <utility>

@@ -2,8 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++14 -Wall -MMD -g
 BUILDDIR = build
 SRCDIR = src
-EXEC = bin/vm
-OBJECTS = ${addprefix ${BUILDDIR}/, main.o Editor.o curses/CursesWindow.o curses/CursesInstance.o}
+EXEC = bin/vm.out
+OBJECTS = ${addprefix ${BUILDDIR}/, main.o Editor.o curses/CursesWindow.o curses/CursesInstance.o view/CursesView.o controller/CursesController.o controller/CursesInput.o state/State.o action/Action.o}
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}

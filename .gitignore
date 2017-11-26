@@ -1,5 +1,6 @@
-bin/*.out
-build/*.d
-build/*.o
+*.out
+*.d
+*.o
 .ycm_extra_conf.py
+*.swp
 .DS_STORE
