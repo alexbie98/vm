@@ -8,13 +8,12 @@
 namespace curses {
 
 class CursesInstance {
-	private:
-		void init();
 	public:
 		CursesInstance();
+		~CursesInstance();
 		char getCh();
-		std::unique_ptr<CursesWindow> makeCursesWindow(Posn pos,
-				int width, int height);
+		std::unique_ptr<CursesWindow> makeCursesWindow(Posn pos, int width, int height);
+		void initColorPair(int color_number, int fg_color, int bg_color);
 
 };
 
