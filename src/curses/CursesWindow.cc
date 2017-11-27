@@ -20,20 +20,20 @@ size_t CursesWindow::getWidth(){
 	return width;
 }
 
-// Posn CursesWindow::getRelativePos(){
-// 	Posn pos;
-// 	getparyx(rawWin, pos.second, pos.first);
+// Pos CursesWindow::getRelativePos(){
+// 	Pos pos;
+// 	getparyx(rawWin, pos.y, pos.x);
 // 	return pos;
 // }
 
-Posn CursesWindow::getAbsolutePos(){
-	Posn pos;
-	getparyx(rawWin, pos.second, pos.first);
+Pos CursesWindow::getAbsolutePos(){
+	Pos pos;
+	getparyx(rawWin, pos.y, pos.x);
 	return pos;
 }
 
-bool CursesWindow::setPos(Posn p){//return bool or int?
-	return mvwin(rawWin, p.second, p.first) == OK;
+bool CursesWindow::setPos(Pos p){//return bool or int?
+	return mvwin(rawWin, p.y, p.x) == OK;
 }
 
 bool CursesWindow::setPos(size_t x, size_t y){

@@ -4,6 +4,6 @@
 #include <stddef.h>
 #include <utility>
 
-typedef std::pair<size_t,size_t> Posn;
+struct Pos{size_t x, y;};
 
 #endif

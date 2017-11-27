@@ -14,10 +14,10 @@ CursesInstance::~CursesInstance(){
 }
 
 
-std::unique_ptr<CursesWindow> CursesInstance::makeCursesWindow(Posn pos,
+std::unique_ptr<CursesWindow> CursesInstance::makeCursesWindow(Pos pos,
 		int width, int height) {
 	std::unique_ptr<CursesWindow> w =
-		unique_ptr<CursesWindow>(new CursesWindow(newwin(height, width, pos.second, pos.first)));
+		unique_ptr<CursesWindow>(new CursesWindow(newwin(height, width, pos.y, pos.x)));
 	//window init stuff here
 	return w;
 }

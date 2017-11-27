@@ -2,7 +2,7 @@
 #define CURSES_H
 #include <ncurses.h>
 #include "curses/CursesWindow.h"
-#include "data/Posn.h"
+#include "data/Pos.h"
 #include <vector>
 
 namespace curses {
@@ -12,7 +12,7 @@ class CursesInstance {
 		CursesInstance();
 		~CursesInstance();
 		char getCh();
-		std::unique_ptr<CursesWindow> makeCursesWindow(Posn pos, int width, int height);
+		std::unique_ptr<CursesWindow> makeCursesWindow(Pos pos, int width, int height);
 		void initColorPair(int color_number, int fg_color, int bg_color);
 
 };

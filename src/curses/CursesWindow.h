@@ -4,7 +4,7 @@
 #include <ncurses.h>
 #include <memory>
 #include <utility>
-#include "data/Posn.h"
+#include "data/Pos.h"
 
 namespace curses {
 
@@ -19,11 +19,11 @@ class CursesWindow {
 		size_t getHeight();
 		size_t getWidth();
 		// //If window is a subwindow, returns windows origin relative to parent window
-		// Posn getRelativePos();
+		// Pos getRelativePos();
 		//Absolute screen coords of windows origin
-		Posn getAbsolutePos();
+		Pos getAbsolutePos();
 		//Do not use to move subwindow
-		bool setPos(Posn p);
+		bool setPos(Pos p);
 		bool setPos(size_t x, size_t y);
 		bool refresh();
 		bool setDrawColor(int color_number);
