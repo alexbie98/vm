@@ -14,9 +14,10 @@ Editor::Editor(const vector<string>& args): state{new State()},
 }
 
 int Editor::run(){
-	while (state->isValid()){
+	while (state->getRunStatus() == State::RUNNING){
 		state->handleInput(controller->getInput());
 	}
+	return state->getRunStatus();
 }
 
 }

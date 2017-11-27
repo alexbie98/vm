@@ -7,7 +7,7 @@
 #include "controller/CursesController.h"
 #include <string>
 #include <vector>
-#include <utility>
+#include <memory>
 
 namespace vm {
 class Editor {
