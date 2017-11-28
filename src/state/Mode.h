@@ -2,6 +2,7 @@
 #define MODE_H
 
 #include <memory>
+#include "action/Action.h"
 
 namespace vm {
 

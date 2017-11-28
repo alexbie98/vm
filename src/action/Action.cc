@@ -11,7 +11,9 @@ void Action::executeOnce(State& context){
 void Action::execute(State& context){
 	for (size_t i=0; i<multiplier;i++){
 		executeOnce(context);
-	}	
+	}
 }
+
+Action::~Action(){}
 
 }
