@@ -4,7 +4,7 @@ using namespace std;
 namespace vm {
 
 Editor::Editor(const vector<string>& args): state{new State()},
- controller{new CursesController(cursesInstance)}, 
+ controller{new CursesController(cursesInstance)},
  view{new CursesView(cursesInstance)}{
 	// add files to the state
 	for (const string& s: args){

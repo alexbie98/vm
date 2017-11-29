@@ -26,13 +26,14 @@ void State::addFile(const std::string& file){
 	files.push_back(make_unique<File>(file, reader.readLines(file)));
 	if (files.size()==1){
 		activeFile = files[0].get();
-	}	
+	}
+	notifyAll(FILE_ADDED);
 }
 
 void State::saveActiveFile(){
 	util::FileWriter writer;
 	writer.writeLines(activeFile->getName(), activeFile->getLines());
-}		
+}
 
 void State::setRunStatus(int runStatus) {
 	this->runStatus = runStatus;
@@ -43,7 +44,7 @@ int State::getRunStatus() const{
 }
 
 void State::handleInput(unique_ptr<Input> input){
-	
+
 }
 
 

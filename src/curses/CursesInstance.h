@@ -8,12 +8,16 @@
 namespace curses {
 
 class CursesInstance {
-	public:
-		CursesInstance();
-		~CursesInstance();
-		char getCh();
-		std::unique_ptr<CursesWindow> makeCursesWindow(Pos pos, int width, int height);
-		void initColorPair(int color_number, int fg_color, int bg_color);
+	CursesWindow screenWindow;
+public:
+	CursesInstance();
+	~CursesInstance();
+	char getCh();
+	Pos getScreenSize();
+
+	const CursesWindow &getScreenWindow();
+	std::unique_ptr<CursesWindow> makeCursesWindow(Pos pos, int width, int height);
+	void initColorPair(int color_number, int fg_color, int bg_color);
 
 };
 

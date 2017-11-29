@@ -8,13 +8,13 @@ CursesWindow::~CursesWindow(){
 	delwin(rawWin);
 }
 
-size_t CursesWindow::getHeight(){
+size_t CursesWindow::getHeight()const{
 	size_t height, width;
 	getmaxyx(rawWin, height, width);
 	return height;
 }
 
-size_t CursesWindow::getWidth(){
+size_t CursesWindow::getWidth()const{
 	size_t height, width;
 	getmaxyx(rawWin, height, width);
 	return width;

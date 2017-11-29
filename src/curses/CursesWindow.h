@@ -14,10 +14,12 @@ class CursesWindow {
 		WINDOW* rawWin;
 		CursesWindow(WINDOW* rawWin);
 	public:
+		//add move ctor/assignment
+		//add const qualifiers
 		~CursesWindow();
 
-		size_t getHeight();
-		size_t getWidth();
+		size_t getHeight()const;
+		size_t getWidth()const;
 		// //If window is a subwindow, returns windows origin relative to parent window
 		// Pos getRelativePos();
 		//Absolute screen coords of windows origin

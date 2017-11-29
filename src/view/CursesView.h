@@ -5,19 +5,24 @@
 #include "curses/CursesWindow.h"
 #include "view/View.h"
 #include "data/Event.h"
+#include "view/Widget.h"
+#include <utility>
+
+class State;
 
 namespace vm {
 
 class CursesView : public View {
-
-	private:
 		curses::CursesInstance& cInst;
+		std::unique_ptr<Widget> widget;
+
+		void draw(const State &state);
 
 	public:
 		CursesView(curses::CursesInstance& cInst);
 		~CursesView() override;
-		void beNotified(Event event, State& subject) override;
 
+		void beNotified(Event event, State& subject) override;
 };
 
 }

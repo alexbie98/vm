@@ -4,7 +4,7 @@ using namespace std;
 
 namespace curses {
 
-CursesInstance::CursesInstance(){
+CursesInstance::CursesInstance():screenWindow{CursesWindow(stdscr)}{
 	initscr();
 	start_color();
 }
@@ -22,8 +22,18 @@ std::unique_ptr<CursesWindow> CursesInstance::makeCursesWindow(Pos pos,
 	return w;
 }
 
+const CursesWindow &CursesInstance::getScreenWindow(){
+
+}
+
 char CursesInstance::getCh(){
 
+}
+
+Pos getScreenSize(){
+	Pos pos;
+	getmaxyx( stdscr, pos.y, pos.x);
+	return pos;
 }
 
 void initColorPair(int color_number, int fg_color, int bg_color){
