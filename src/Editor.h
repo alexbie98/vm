@@ -12,10 +12,10 @@
 namespace vm {
 class Editor {
 	private:
+		curses::CursesInstance cursesInstance;
 		std::unique_ptr<State> state;
 		std::unique_ptr<Controller> controller;
 		std::unique_ptr<View> view;
-		curses::CursesInstance cursesInstance;
 
 	public:
 		Editor(const std::vector<std::string>& args);

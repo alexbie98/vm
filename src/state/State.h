@@ -30,6 +30,8 @@ class State: public Subject<State,Event>{
 		std::unique_ptr<TerminalMode> terminalMode;
 
 	public:
+		// Prior to any function that triggers an event,
+		// Must add observers.
 		static const int RUNNING;
 		static const int SAFE_EXIT;
 		static const int ERROR_EXIT;
@@ -42,12 +44,12 @@ class State: public Subject<State,Event>{
 
 		void setRunStatus(int runStatus);
 		int getRunStatus() const;
-		
+
 		void handleInput(std::unique_ptr<Input> input);
 
 		File& getFile();
 		const File& getFile() const;
-		
+
 		void setActiveMode(Mode* nextMode);
 		Mode& getMode();
 		const File& getMode() const;

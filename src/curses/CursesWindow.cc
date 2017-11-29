@@ -1,4 +1,5 @@
 #include "curses/CursesWindow.h"
+#include <iostream>
 
 namespace curses {
 

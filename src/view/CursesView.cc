@@ -12,8 +12,8 @@ namespace vm {
 		//Make window same size as the screen
 		std::unique_ptr<curses::CursesWindow> cursesWindow =
 			cInst.makeCursesWindow(Pos{0,0},
-														 cInst.getScreenWindow().getWidth(),
-														 cInst.getScreenWindow().getHeight());
+														 cInst.getScreenWidth(),
+														 cInst.getScreenHeight());
 		widget = std::make_unique<FileText>(std::make_unique<Window>(std::move(cursesWindow)));
 	}
 
@@ -24,7 +24,6 @@ namespace vm {
 	}
 
 	void CursesView::beNotified(Event event, State& subject){
-		//std::cout<< "test" <<std::endl;
 		switch(event){
 			case FILE_ADDED:
 				draw(subject);

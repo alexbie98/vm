@@ -30,7 +30,7 @@ class Subject {
 
 		void notifyAll (EType event) {
 			for (Observer<T, EType>* obs : obsList){
-				obs->beNotified(event, static_cast<T&>(*this));
+				obs->beNotified(event, static_cast<T&>(*this));//cursesview not getting notified
 			}
 		}
 

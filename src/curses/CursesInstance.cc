@@ -1,12 +1,14 @@
 #include "CursesInstance.h"
-
+#include <iostream>
 using namespace std;
 
 namespace curses {
 
-CursesInstance::CursesInstance():screenWindow{CursesWindow(stdscr)}{
+CursesInstance::CursesInstance(){
 	initscr();
 	start_color();
+	size_t height, width;
+	getmaxyx(stdscr, height, width);
 }
 
 CursesInstance::~CursesInstance(){
@@ -22,18 +24,20 @@ std::unique_ptr<CursesWindow> CursesInstance::makeCursesWindow(Pos pos,
 	return w;
 }
 
-const CursesWindow &CursesInstance::getScreenWindow(){
+size_t CursesInstance::getScreenHeight()const{
+	size_t height, width;
+	getmaxyx(stdscr, height, width);
+	return height;
+}
 
+size_t CursesInstance::getScreenWidth()const{
+	size_t height, width;
+	getmaxyx(stdscr, height, width);
+	return width;
 }
 
 char CursesInstance::getCh(){
 
-}
-
-Pos getScreenSize(){
-	Pos pos;
-	getmaxyx( stdscr, pos.y, pos.x);
-	return pos;
 }
 
 void initColorPair(int color_number, int fg_color, int bg_color){

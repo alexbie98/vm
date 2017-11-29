@@ -3,6 +3,7 @@
 
 enum Event {
   FILE_ADDED,
+  ACTION_EXECUTED
 };
 
 #endif
