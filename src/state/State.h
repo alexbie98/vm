@@ -20,6 +20,8 @@ class InsertMode;
 class TerminalMode;
 
 class State: public Subject<State,Event>{
+		
+	private:
 		int runStatus;
 		File* activeFile;
 		Mode* activeMode;
@@ -28,11 +30,13 @@ class State: public Subject<State,Event>{
 		std::unique_ptr<CommandMode> commandMode;
 		std::unique_ptr<InsertMode> insertMode;
 		std::unique_ptr<TerminalMode> terminalMode;
+		
+		void executeAction();
 
 	public:
-		static const int RUNNING;
-		static const int SAFE_EXIT;
-		static const int ERROR_EXIT;
+		static const int State::RUNNING;
+		static const int State::SAFE_EXIT;
+		static const int State::ERROR_EXIT;
 
 		State();
 		~State() override;
@@ -51,6 +55,8 @@ class State: public Subject<State,Event>{
 		void setActiveMode(Mode* nextMode);
 		Mode& getMode();
 		const File& getMode() const;
+
+
 
 };
 

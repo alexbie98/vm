@@ -1,4 +1,4 @@
-#include "state/InsertMode.h"
+#include "state/mode/InsertMode.h"
 
 namespace vm {
 

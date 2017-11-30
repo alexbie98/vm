@@ -1,4 +1,4 @@
-#include "state/CommandMode.h"
+#include "state/mode/CommandMode.h"
 
 namespace vm {
 

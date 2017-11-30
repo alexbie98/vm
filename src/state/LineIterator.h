@@ -2,7 +2,7 @@
 #define LINE_ITERATOR_H
 
 #include <vector>
-#include "stddef.h"
+#include <cstddef>
 #include <string>
 
 namespace vm {

@@ -1,4 +1,4 @@
-#include "state/Mode.h"
+#include "state/mode/Mode.h"
 #include "controller/Input.h"
 #include "controller/InputParser.h"
 

@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <memory>
 #include <utility>
+#include <string>
 #include "data/Pos.h"
 
 namespace curses {

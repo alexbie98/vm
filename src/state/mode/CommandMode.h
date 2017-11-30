@@ -1,7 +1,7 @@
 #ifndef COMMAND_MODE_H
 #define COMMAND_MODE_H
 
-#include "state/Mode.h"
+#include "state/mode/Mode.h"
 
 namespace vm {
 

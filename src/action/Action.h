@@ -10,14 +10,21 @@ class State;
 
 class Action {
 
-	private:
-		size_t multiplier;
+	protected:
 		std::unique_ptr<Action> nextAction;
-		void executeOnce(State& context);
+
+	private:
+		size_t multi;
 		virtual void doAction(State& context) = 0;
+
 	public:
+		Action(size_t multi = 1,
+				std::unique_ptr<Action> nextAction=unique_ptr<Action>{});
+		void setMultiplier(size_t multi);
+		size_t getMultiplier() const;
 		void execute(State& context);
-		virtual ~Action() = 0;
+		virtual ~Action();
+		virtual std::unique_ptr<Action> clone() = 0;
 };
 
 }

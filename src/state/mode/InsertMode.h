@@ -1,7 +1,7 @@
 #ifndef INSERT_MODE_H
 #define INSERT_MODE_H
 
-#include "state/Mode.h"
+#include "state/mode/Mode.h"
 
 namespace vm {
 

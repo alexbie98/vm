@@ -1,10 +1,10 @@
-#include "File.h"
+#include "state/File.h"
 
 using namespace std;
 namespace vm {
 
 File::File(const string& name, vector<string> lines): name{name}, 
-	lines{lines}, cursorPos{Pos{0,0}} {}
+	lines{lines}, cursorPos{Pos{}} {}
 
 File::~File(){}
 
@@ -38,12 +38,24 @@ LineIterator File::lineEnd(){
 
 
 // ------------------------------------------------------------------------
-const std::string& File::getName() const {
+const string& File::getName() const {
 	return name;
 }
 
-const vector<string>& File::getLines() const {
+const std::vector<string>& File::getLines() const {
 	return lines;
+
+}
+
+Pos File::getCursorPos() const {
+	return cursorPos;
+}
+
+void File::setCursorPos(Pos p){
+	if (p.y>=0 && p.y<lines.size() && p.x >=0 && p.x < lines[p.y].length()){
+		cursorPos = p;
+	}
+	else throw BadOperationErr{};
 }
 
 void File::addString(string s, Pos pos){

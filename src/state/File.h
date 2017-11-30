@@ -15,6 +15,8 @@ class File{
 
 public:
 
+	class BadOperationErr {};
+
 	File(const std::string& name, std::vector<std::string> data);
 	~File();
 
@@ -36,8 +38,12 @@ public:
 	
 	const std::string& getName() const;
 	const std::vector<std::string>& getLines() const;
+	Pos getCursorPos() const;
+	
 
 
+	void setCursorPos(Pos p); 
+	void setName(std::string name);
   void addString(std::string s, Pos pos);
   void addLines(std::vector<std::string> newLines, size_t lineNumber);
   void replaceString(std::string s, Pos pos);
