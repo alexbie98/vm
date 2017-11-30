@@ -46,7 +46,8 @@ bool CursesWindow::refresh(){
 }
 
 bool CursesWindow::setDrawColor(int color_number){
-	return wattron(rawWin, COLOR_PAIR(1)) == OK;
+	return wattron(rawWin, COLOR_PAIR(color_number));
+	//return wattron(rawWin, COLOR_PAIR(color_number)) == OK;
 }
 
 int CursesWindow::getDrawColor(){

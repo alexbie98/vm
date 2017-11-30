@@ -7,6 +7,7 @@ namespace curses {
 CursesInstance::CursesInstance(){
 	initscr();
 	start_color();
+	use_default_colors();
 	size_t height, width;
 	getmaxyx(stdscr, height, width);
 }
@@ -40,7 +41,7 @@ char CursesInstance::getCh(){
 
 }
 
-void initColorPair(int color_number, int fg_color, int bg_color){
+void CursesInstance::initColorPair(int color_number, int fg_color, int bg_color){
 	init_pair(color_number, fg_color, bg_color);
 }
 

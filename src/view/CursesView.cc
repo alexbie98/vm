@@ -1,6 +1,7 @@
 #include "view/CursesView.h"
 #include "view/FileText.h"
 #include "view/Window.h"
+#include "curses/CursesConstants.h"
 
 #include <iostream>
 
@@ -15,6 +16,9 @@ namespace vm {
 														 cInst.getScreenWidth(),
 														 cInst.getScreenHeight());
 		widget = std::make_unique<FileText>(std::make_unique<Window>(std::move(cursesWindow)));
+
+		// Initialize color pallet
+		//cInst.initColorPair(1, curses::color:White, curses::color::Black);
 	}
 
 	void CursesView::draw(const State& state){

@@ -18,7 +18,9 @@ void FileText::draw(const State &state){
   widget->draw(state);
 
   size_t drawLine = 0;
-  for(auto it = state.getFile().MakeLineIterator(currentLine); it != state.getFile().lineEnd(); ++it){
+  for(auto it = state.getFile().MakeLineIterator(currentLine);
+      it != state.getFile().lineEnd() && drawLine <= win.getHeight();
+      ++it){
     if((*it).size() == 0) drawLine++;
     else drawLine+=drawLineWithWrap(*it, drawLine++);
   }
