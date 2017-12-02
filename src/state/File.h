@@ -3,6 +3,7 @@
 
 #include "data/Pos.h"
 #include "state/LineIterator.h"
+#include "state/CharIterator.h"
 #include <string>
 #include <vector>
 
@@ -33,7 +34,16 @@ public:
   LineIterator lineBegin();
   LineIterator lineEnd();
 
-	
+  // Char iterator functions
+  ConstCharIterator MakeCharIterator(Pos pos) const;
+  ConstCharIterator charBegin() const;
+  ConstCharIterator charEnd() const;
+
+  CharIterator MakeCharIterator(Pos pos);
+  CharIterator charBegin();
+  CharIterator charEnd();
+
+
 	const std::string& getName() const;
 	const std::vector<std::string>& getLines() const;
 

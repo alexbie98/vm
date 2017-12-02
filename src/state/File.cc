@@ -3,7 +3,7 @@
 using namespace std;
 namespace vm {
 
-File::File(const string& name, vector<string> lines): name{name}, 
+File::File(const string& name, vector<string> lines): name{name},
 	lines{lines}, cursorPos{Pos{0,0}} {}
 
 File::~File(){}
@@ -35,7 +35,29 @@ LineIterator File::lineEnd(){
 
 // CharIterator functions -------------------------------------------------
 
+ConstCharIterator File::MakeCharIterator(Pos pos) const {
+	return ConstCharIterator(lines, pos);
+}
 
+ConstCharIterator File::charBegin() const {
+	return ConstCharIterator(lines, Pos(0,0));
+}
+
+ConstCharIterator File::charEnd() const {
+	return ConstCharIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size()));
+}
+
+CharIterator File::MakeCharIterator(Pos pos){
+	return CharIterator(lines, pos);
+}
+
+CharIterator File::charBegin(){
+	return CharIterator(lines, Pos(0,0));
+}
+
+CharIterator File::charEnd(){
+	return CharIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size()));
+}
 
 // ------------------------------------------------------------------------
 const std::string& File::getName() const {

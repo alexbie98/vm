@@ -5,7 +5,7 @@ namespace vm {
 
 // ConstLineIterator implementations ----------------------------------------
 
-ConstLineIterator::ConstLineIterator(const vector<string>& data, 
+ConstLineIterator::ConstLineIterator(const vector<string>& data,
 	size_t lineNumber): data{data}, lineNumber{lineNumber} {}
 
 bool ConstLineIterator::operator!=(const ConstLineIterator &other) const {
@@ -23,7 +23,7 @@ ConstLineIterator ConstLineIterator::operator++(){
 
 // LineIterator implementations ----------------------------------------
 
-LineIterator::LineIterator(vector<string>& data, size_t lineNumber): 
+LineIterator::LineIterator(vector<string>& data, size_t lineNumber):
 	data{data}, lineNumber{lineNumber} {}
 
 bool LineIterator::operator!=(const LineIterator &other) const {
@@ -40,5 +40,3 @@ LineIterator LineIterator::operator++(){
 }
 
 }
-
-
