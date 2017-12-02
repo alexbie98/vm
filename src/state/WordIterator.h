@@ -9,7 +9,6 @@
 
 namespace vm {
 
-//TODO Make word iterator and make conversion to char iterator
 class ConstWordIterator {
 
 		ConstCharIterator it;
@@ -24,6 +23,7 @@ class ConstWordIterator {
 		ConstWordIterator operator++();
 
 	friend class File;
+  friend class ConstCharIterator; // To allow for casting to
 };
 
 }

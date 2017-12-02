@@ -1,4 +1,5 @@
 #include "state/CharIterator.h"
+#include "state/WordIterator.h"
 
 using namespace std;
 namespace vm {
@@ -34,6 +35,9 @@ ConstCharIterator ConstCharIterator::minusOne() const{//TODO check
     return ConstCharIterator(data, Pos(data[filePos.y - 1].size() - 1, filePos.y - 1));
   else return ConstCharIterator(data, Pos(filePos.x - 1, filePos.y));
 }
+
+ConstCharIterator::ConstCharIterator(const ConstWordIterator &wordIt):
+  data{wordIt.it.data}, filePos{wordIt.it.filePos}{}
 
 // CharIterator implementations ----------------------------------------
 

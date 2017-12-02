@@ -8,10 +8,11 @@
 
 namespace vm {
 
-//TODO Make word iterator and make conversion to char iterator
+class ConstWordIterator;
+
+//TODO add copy?
 class ConstCharIterator {
 
-	private:
 		const std::vector<std::string>& data;
 		Pos filePos;
 
@@ -26,6 +27,8 @@ class ConstCharIterator {
 		// points to the first element of the file, returns an
 		// identical iterator.
 		ConstCharIterator minusOne() const;
+		// Overload cast from WordIterator
+		ConstCharIterator(const ConstWordIterator &wordIt);
 
 	friend class File;
 	friend class ConstWordIterator;
