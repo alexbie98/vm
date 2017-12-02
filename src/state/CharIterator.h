@@ -11,6 +11,7 @@ namespace vm {
 class ConstWordIterator;
 
 //TODO add copy?
+//TODO update code to use getPos()
 class ConstCharIterator {
 
 		const std::vector<std::string>& data;
@@ -29,6 +30,7 @@ class ConstCharIterator {
 		ConstCharIterator minusOne() const;
 		// Overload cast from WordIterator
 		ConstCharIterator(const ConstWordIterator &wordIt);
+		Pos getPos() const;
 
 	friend class File;
 	friend class ConstWordIterator;
@@ -48,6 +50,7 @@ class CharIterator {
 		char& operator*() const;
 		CharIterator operator++();
 		CharIterator minusOne() const;
+		Pos getPos() const;
 
 	friend class File;
 	friend class WordIterator;

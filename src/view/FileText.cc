@@ -4,6 +4,7 @@
 #include <iostream>
 namespace vm{
 
+//fix line wrapping to work with tabs
 size_t FileText::drawLineWithWrap(const std::string &s, size_t y){
   size_t windowWidth = win.getWidth();
   size_t posInString = 0;

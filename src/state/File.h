@@ -7,13 +7,21 @@
 #include "state/WordIterator.h"
 #include <string>
 #include <vector>
+#include <map>
+#include <string>
+#include "state/IndicatorPack.h"
 
 namespace vm {
+
+class SyntaxHighlighter;
 
 class File{
   std::string name;
   std::vector<std::string> lines;
   Pos cursorPos;
+  IndicatorPack indicatorPack;
+  const SyntaxHighlighter *syntaxHighlighter;
+  std::string fileExtension;
 
 public:
 
@@ -54,6 +62,9 @@ public:
 
 	const std::string& getName() const;
 	const std::vector<std::string>& getLines() const;
+  const IndicatorPack &getIndicatorPack() const;
+  IndicatorPack &getIndicatorPack();
+  const std::string &getFileExtension();
 
 
   void addString(std::string s, Pos pos);
@@ -64,6 +75,9 @@ public:
   void removeLines(size_t start, size_t end);
 
   void undo();
+
+  void parseAttributes();
+  void setSyntaxHighlighter(const SyntaxHighlighter &s);
 };
 
 }

@@ -21,6 +21,10 @@ ConstLineIterator ConstLineIterator::operator++(){
 	return *this;
 }
 
+size_t ConstLineIterator::getLineNumber() const{
+	return lineNumber;
+}
+
 // LineIterator implementations ----------------------------------------
 
 LineIterator::LineIterator(vector<string>& data, size_t lineNumber):
@@ -37,6 +41,10 @@ string& LineIterator::operator*() const {
 LineIterator LineIterator::operator++(){
 	lineNumber++;
 	return *this;
+}
+
+size_t LineIterator::getLineNumber() const{
+	return lineNumber;
 }
 
 }

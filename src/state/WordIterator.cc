@@ -44,4 +44,8 @@ ConstWordIterator ConstWordIterator::operator++(){
 	return *this;
 }
 
+Pos ConstWordIterator::getPos(){
+	return it.getPos();
+}
+
 }

@@ -39,6 +39,10 @@ ConstCharIterator ConstCharIterator::minusOne() const{//TODO check
 ConstCharIterator::ConstCharIterator(const ConstWordIterator &wordIt):
   data{wordIt.it.data}, filePos{wordIt.it.filePos}{}
 
+Pos ConstCharIterator::getPos() const{
+	return filePos;
+}
+
 // CharIterator implementations ----------------------------------------
 
 CharIterator::CharIterator(vector<string>& data, Pos filePos):
@@ -69,6 +73,10 @@ CharIterator CharIterator::minusOne() const{//TODO check
   else if(filePos.x == 0)
     return CharIterator(data, Pos(data[filePos.y - 1].size() - 1, filePos.y - 1));
   else return CharIterator(data, Pos(filePos.x - 1, filePos.y));
+}
+
+Pos CharIterator::getPos() const{
+	return filePos;
 }
 
 }

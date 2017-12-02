@@ -1,4 +1,5 @@
 #include "File.h"
+#include "state/SyntaxHighlighter.h"
 
 using namespace std;
 namespace vm {
@@ -82,6 +83,18 @@ const vector<string>& File::getLines() const {
 	return lines;
 }
 
+const IndicatorPack& File::getIndicatorPack() const{
+	return indicatorPack;
+}
+
+IndicatorPack& File::getIndicatorPack(){
+	return indicatorPack;
+}
+
+const std::string& File::getFileExtension(){
+	return fileExtension;
+}
+
 void File::addString(string s, Pos pos){
   //TODO
 }
@@ -108,6 +121,63 @@ void File::removeLines(size_t start, size_t end){
 
 void File::undo(){
   //TODO
+}
+
+void File::parseAttributes(){
+	indicatorPack.rangeIndicators.clear();
+	indicatorPack.wordIndicators.clear();
+
+	// Parse range attributes
+	for(auto it = syntaxHighlighter->rangeAttributes.begin(); it != syntaxHighlighter->rangeAttributes.end(); ++it){
+
+		size_t linePos = 0;
+		bool lookingForStart = true;
+		RangeIndicator rangeIndicator;
+
+		for(auto line = lineBegin(); line != lineEnd(); ++line){
+
+			while(linePos <= (*line).size()){
+				if(lookingForStart){
+					size_t lpos = (*line).find((*it).getStartIndicator(), linePos);
+					if(lpos == string::npos) break;
+					else{
+						linePos+=lpos;
+						lookingForStart = false;
+						rangeIndicator.ranges.push_back(Pos(lpos, line.getLineNumber()));
+					}
+				}
+				else{ // Looking for end
+					size_t lpos = (*line).find((*it).getEndIndicator(), linePos);
+					if(lpos == string::npos) break;
+					else{
+						linePos+=lpos;
+						lookingForStart = true;
+						rangeIndicator.ranges.push_back(Pos(lpos + (*it).getEndIndicator().size(), line.getLineNumber()));
+					}
+				}
+
+			}
+		}
+
+		indicatorPack.rangeIndicators.push_back(rangeIndicator);
+	}
+
+	// Parse word attributes
+	for(auto it = syntaxHighlighter->wordAttributes.begin(); it != syntaxHighlighter->wordAttributes.end(); ++it){
+
+		//TODO add determine whitespace function?
+		WordIndicator wordIndicator;
+
+		for(auto word = wordBegin(); word != wordEnd(); ++word){
+			if((*it)->matches(word)) wordIndicator.words.push_back(word.getPos());
+		}
+
+		indicatorPack.wordIndicators.push_back(wordIndicator);
+	}
+}
+
+void File::setSyntaxHighlighter(const SyntaxHighlighter &s){
+	syntaxHighlighter = &s;
 }
 
 }

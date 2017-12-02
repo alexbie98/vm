@@ -21,6 +21,7 @@ class ConstWordIterator {
 		bool operator!=(const ConstWordIterator &other) const;
 		std::string operator*() const;
 		ConstWordIterator operator++();
+		Pos getPos();
 
 	friend class File;
   friend class ConstCharIterator; // To allow for casting to

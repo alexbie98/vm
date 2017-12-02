@@ -19,7 +19,8 @@ class ConstLineIterator {
 		bool operator!=(const ConstLineIterator &other) const;
 		const std::string& operator*() const;
 		ConstLineIterator operator++();
-
+		size_t getLineNumber() const;
+		
 	friend class File;
 };
 
@@ -35,6 +36,7 @@ class LineIterator {
 		bool operator!=(const LineIterator &other) const;
 		std::string& operator*() const;
 		LineIterator operator++();
+		size_t getLineNumber() const;
 
 	friend class File;
 };

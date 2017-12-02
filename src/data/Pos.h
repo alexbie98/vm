@@ -12,6 +12,10 @@ struct Pos{
   bool operator!=(const Pos &other) const{
     return x != other.x || y != other.y;
   }
+  const Pos &operator=(const Pos &other){
+    x = other.x;
+    y = other.y;
+  }
 };
 
 #endif
