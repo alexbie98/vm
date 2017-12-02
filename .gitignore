@@ -4,3 +4,4 @@
 .ycm_extra_conf.py
 *.swp
 .DS_STORE
+Makefile2

@@ -7,18 +7,16 @@ namespace  vm {
 
 // forward declare
 class Action;
-class CursesInput;
+class KeyInput;
 class Input;
 
 class InputParser {
 
-	private:
-		std::vector<std::unique_ptr<Input>> inputBuffer;
 	public:
 		virtual std::unique_ptr<Action> 
-			parseInput(std::unique_ptr<CursesInput> in) = 0;
+			parseInput(std::unique_ptr<KeyInput> in) = 0;
 
-		virtual ~InputParser() = 0;
+		virtual ~InputParser() {}
 };
 
 }

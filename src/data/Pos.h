@@ -16,6 +16,11 @@ struct Pos{
     x = other.x;
     y = other.y;
   }
+  Pos& operator+=(const Pos& other){
+		x+=other.x;
+		y+=other.y;
+		return *this;
+	}
 };
 
 #endif

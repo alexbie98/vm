@@ -3,13 +3,14 @@
 
 #include <memory>
 #include <string>
-#include "data/Event.h"
-#include "data/Subject.h"
 #include <vector>
 #include <map>
 #include <unordered_map>
 #include <memory>
 #include "state/SyntaxHighlighter.h"
+
+#include "data/Event.h"
+#include "data/Subject.h"
 
 namespace vm {
 
@@ -21,7 +22,24 @@ class CommandMode;
 class InsertMode;
 class TerminalMode;
 
+class Action;
+
 class State: public Subject<State,Event>{
+
+	public :
+		struct Register {
+			std::string paste;
+			std::string strSearch;
+			char charSearch;
+			std::unique_ptr<Action> lastChangeAction;
+			std::unordered_map<char, std::unique_ptr<Action>> macroMap;
+			size_t scrollLength;
+			private:
+				Register();
+			friend class State;
+		};
+
+	private:
 		int runStatus;
 		File* activeFile;
 		Mode* activeMode;
@@ -31,8 +49,12 @@ class State: public Subject<State,Event>{
 		std::unique_ptr<InsertMode> insertMode;
 		std::unique_ptr<TerminalMode> terminalMode;
 
+		Register reg;
+
+		void executeAction();
+
 		std::unordered_map<std::string, SyntaxHighlighter> extHighlighters;
-		
+
 	public:
 		// Prior to any function that triggers an event,
 		// Must add observers.
@@ -57,6 +79,8 @@ class State: public Subject<State,Event>{
 		void setActiveMode(Mode* nextMode);
 		Mode& getMode();
 		const File& getMode() const;
+
+		Register& getRegister();
 		//TODO add tabsize constant?
 };
 

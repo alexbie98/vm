@@ -1,9 +1,10 @@
 #include "state/State.h"
+#include "action/Action.h"
 #include "state/File.h"
-#include "state/Mode.h"
-#include "state/CommandMode.h"
-#include "state/InsertMode.h"
-#include "state/TerminalMode.h"
+#include "state/mode/Mode.h"
+#include "state/mode/CommandMode.h"
+#include "state/mode/InsertMode.h"
+#include "state/mode/TerminalMode.h"
 #include "controller/Input.h"
 #include "util/FileReader.h"
 #include "util/FileWriter.h"
@@ -44,7 +45,8 @@ int State::getRunStatus() const{
 }
 
 void State::handleInput(unique_ptr<Input> input){
-
+	std::unique_ptr<Action> action = activeMode->parseInput(move(input));
+	action->execute(*this);
 }
 
 
@@ -70,6 +72,14 @@ const File& State::getMode() const {
 	return *activeFile;
 }
 
+
+// Register functions -----------------
+State::Register& State::getRegister() {
+	return reg;
+}
+
+State::Register::Register(): paste{}, strSearch{}, charSearch{0},
+ lastChangeAction{}, macroMap{}, scrollLength{0} {}
 
 
 }

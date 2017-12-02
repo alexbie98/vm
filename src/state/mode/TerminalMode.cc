@@ -1,4 +1,4 @@
-#include "state/TerminalMode.h"
+#include "state/mode/TerminalMode.h"
 
 namespace vm {
 

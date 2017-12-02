@@ -1,7 +1,9 @@
 #ifndef FILE_H
 #define FILE_H
 
+#include <cstddef>
 #include "data/Pos.h"
+#include "data/Direction.h"
 #include "state/LineIterator.h"
 #include "state/CharIterator.h"
 #include "state/WordIterator.h"
@@ -24,6 +26,8 @@ class File{
   std::string fileExtension;
 
 public:
+
+	class BadOperationErr {};
 
 	File(const std::string& name, std::vector<std::string> data);
 	~File();
@@ -61,12 +65,17 @@ public:
   ConstWordIterator wordEnd();
 
 	const std::string& getName() const;
+	std::string getString(Pos start, Pos end) const;
 	const std::vector<std::string>& getLines() const;
-  const IndicatorPack &getIndicatorPack() const;
-  IndicatorPack &getIndicatorPack();
-  const std::string &getFileExtension();
 
+	Pos getCursorPos() const;
+	Pos toScreenCoords(Pos lineCoords) const;
+	Pos toLineCoords(Pos screenCoords) const;
 
+	void setCursorPos(Pos p);
+	void moveCursor(Direction d);
+
+	void setName(std::string name);
   void addString(std::string s, Pos pos);
   void addLines(std::vector<std::string> newLines, size_t lineNumber);
   void replaceString(std::string s, Pos pos);
@@ -78,6 +87,10 @@ public:
 
   void parseAttributes();
   void setSyntaxHighlighter(const SyntaxHighlighter &s);
+
+  const IndicatorPack &getIndicatorPack() const;
+  IndicatorPack &getIndicatorPack();
+  const std::string &getFileExtension();
 };
 
 }
