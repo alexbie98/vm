@@ -4,6 +4,7 @@
 #include "data/Pos.h"
 #include "state/LineIterator.h"
 #include "state/CharIterator.h"
+#include "state/WordIterator.h"
 #include <string>
 #include <vector>
 
@@ -43,6 +44,13 @@ public:
   CharIterator charBegin();
   CharIterator charEnd();
 
+  // Word iterator functions
+  // If pos is not at start of word, MakeWordIterator
+  // moves to next words beginning, or if there is no
+  // next word, the end of the file.
+  ConstWordIterator MakeWordIterator(Pos pos);
+  ConstWordIterator wordBegin();
+  ConstWordIterator wordEnd();
 
 	const std::string& getName() const;
 	const std::vector<std::string>& getLines() const;

@@ -59,6 +59,20 @@ CharIterator File::charEnd(){
 	return CharIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size()));
 }
 
+// WordIterator functions -------------------------------------------------
+
+ConstWordIterator File::MakeWordIterator(Pos pos){
+	return ConstWordIterator(lines, pos);
+}
+
+ConstWordIterator File::wordBegin(){
+	return ConstWordIterator(lines, Pos(0,0));
+}
+
+ConstWordIterator File::wordEnd(){
+	return ConstWordIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size()));
+}
+
 // ------------------------------------------------------------------------
 const std::string& File::getName() const {
 	return name;
