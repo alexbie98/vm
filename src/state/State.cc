@@ -72,10 +72,13 @@ const File& State::getMode() const {
 }
 
 
+// Register functions -----------------
+State::Register& State::getRegister() {
+	return reg;
+}
 
-
-
-
+State::Register::Register(): paste{}, strSearch{}, charSearch{0},
+ lastChangeAction{}, macroMap{}, scrollLength{0} {}
 
 
 }

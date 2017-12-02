@@ -10,16 +10,16 @@ class State;
 
 class Action {
 
-	protected:
-		std::unique_ptr<Action> nextAction;
 
 	private:
 		size_t multi;
 		virtual void doAction(State& context) = 0;
+	
+	protected:
+		std::unique_ptr<Action> nextAction;
 
 	public:
-		Action(size_t multi = 1,
-				std::unique_ptr<Action> nextAction=unique_ptr<Action>{});
+		Action(size_t multi, std::unique_ptr<Action> nextAction);
 		void setMultiplier(size_t multi);
 		size_t getMultiplier() const;
 		void execute(State& context);

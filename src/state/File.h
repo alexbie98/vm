@@ -1,7 +1,9 @@
 #ifndef FILE_H
 #define FILE_H
 
+#include <cstddef>
 #include "data/Pos.h"
+#include "data/Direction.h"
 #include "state/LineIterator.h"
 #include <string>
 #include <vector>
@@ -12,7 +14,7 @@ class File{
   std::string name;
   std::vector<std::string> lines;
   Pos cursorPos;
-
+	
 public:
 
 	class BadOperationErr {};
@@ -37,12 +39,17 @@ public:
 
 	
 	const std::string& getName() const;
+	std::string getString(Pos start, Pos end) const;
 	const std::vector<std::string>& getLines() const;
 	Pos getCursorPos() const;
+	Pos toScreenCoords(Pos lineCoords) const;
+	Pos toLineCoords(Pos screenCoords) const;
 	
 
 
-	void setCursorPos(Pos p); 
+	void setCursorPos(Pos p);
+	void moveCursor(Direction d);
+
 	void setName(std::string name);
   void addString(std::string s, Pos pos);
   void addLines(std::vector<std::string> newLines, size_t lineNumber);
@@ -50,6 +57,7 @@ public:
   void replaceLines(std::vector<std::string> newLines, size_t lineNumber);
   void removeString(Pos start, Pos end);
   void removeLines(size_t start, size_t end);
+	
 
   void undo();
 };

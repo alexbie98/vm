@@ -11,7 +11,7 @@ void Action::execute(State& context){
 	for (size_t i=0;i<multi;i++){
 		doAction(context);
 	}
-	nextAction->execute(context);
+	if (nextAction) nextAction->execute(context);
 }
 void Action::setMultiplier(size_t multi){
 	this->multi = multi;

@@ -7,28 +7,21 @@ using namespace std;
 namespace vm {
 
 void DirectionalMovementAction::doAction(State& context){
- Pos p;
-
- switch(d){
-	case UP: p.y++; break;
-	case DOWN: p.y--; break;
-	case LEFT: p.x--; break;
-	case RIGHT: p.x++; break;
- }
- Pos current = context.getFile().getCursorPos();
- context.getFile().setCursorPos(current+=p);
+	context.getFile().moveCursor(d);
 }
 
 DirectionalMovementAction::DirectionalMovementAction(Direction d,
 		size_t multi, unique_ptr<Action> nextAction):
-	Action{multi, move(nextAction)}, d{d} {}
+	MovementAction{multi, move(nextAction)}, d{d} {}
 		
 unique_ptr<Action> DirectionalMovementAction::clone(){
 	unique_ptr<Action> nextClone;
-	if (nextAction)  
-	return make_unique<Action>(d, multi, nextAction->clone());
-
+	if (nextAction) nextClone = nextAction->clone();
+	
+	return make_unique<DirectionalMovementAction>(d, getMultiplier(), 
+			move(nextClone));
 }
+
 DirectionalMovementAction::~DirectionalMovementAction() {}
 
 }

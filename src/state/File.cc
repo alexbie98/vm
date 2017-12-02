@@ -42,20 +42,63 @@ const string& File::getName() const {
 	return name;
 }
 
+string File::getString(Pos start, Pos end) const {
+	return "";
+}
+
 const std::vector<string>& File::getLines() const {
 	return lines;
 
 }
 
 Pos File::getCursorPos() const {
-	return cursorPos;
+		return cursorPos;
+}
+
+Pos File::toScreenCoords(Pos lineCoords) const{
+	return Pos{};
+}
+
+Pos File::toLineCoords(Pos screenCoords) const{
+	return Pos{};
 }
 
 void File::setCursorPos(Pos p){
-	if (p.y>=0 && p.y<lines.size() && p.x >=0 && p.x < lines[p.y].length()){
+	if (p.y<lines.size() && p.x < lines[p.y].length()){
 		cursorPos = p;
 	}
 	else throw BadOperationErr{};
+}
+
+void File::moveCursor(Direction d){
+
+	Pos screen;
+	switch (d) {
+		case UP: {
+			if (cursorPos.y == 0) throw BadOperationErr{};
+			screen = toScreenCoords(cursorPos);
+			screen.y--;
+			setCursorPos(toLineCoords(screen));
+			break;
+		}
+		case DOWN: {
+			if (cursorPos.y == lines.size()-1) throw BadOperationErr{};
+			Pos screen = toScreenCoords(cursorPos);
+			screen.y++;
+			setCursorPos(toLineCoords(screen));
+			break;
+		}
+		case LEFT: {
+			if (cursorPos.x == 0) throw BadOperationErr{};
+			cursorPos.x--;
+			break;
+		}
+		case RIGHT: {
+			if (cursorPos.x == lines[cursorPos.y].size()-1) throw BadOperationErr{};
+			cursorPos.x++;
+			break;
+		}
+	}
 }
 
 void File::addString(string s, Pos pos){

@@ -1,6 +1,10 @@
 #include "state/mode/CommandModeInputParser.h"
-#include "state/mode/Command.h"
+#include "state/command/Command.h"
+#include "state/command/SimpleCommand.h"
+#include "controller/KeyInput.h"
+#include "action/Action.h"
 
+using namespace std;
 namespace vm {
 
 void CommandModeInputParser::reset(){
@@ -12,7 +16,7 @@ void CommandModeInputParser::reset(){
 
 void CommandModeInputParser::addEntries(){
 	
-
+	// ADD ENTRIES FOR ALL COMMMANDS
 
 }
 
@@ -22,16 +26,13 @@ CommandModeInputParser::CommandModeInputParser(): decimal{1}, numBuffer{0},
 }
 
 
+unique_ptr<Action> CommandModeInputParser::parseInput(unique_ptr<KeyInput> in){
+	char key = in->getKey();
 
-std::unique_ptr<Action> 
-			parseInput(std::unique_ptr<KeyInput> in) override;
+	return unique_ptr<Action>{};
+}
 
-		~CommandModeInputParser() override;
-
-
-
-
-
-
+CommandModeInputParser::~CommandModeInputParser(){}
 
 }
+

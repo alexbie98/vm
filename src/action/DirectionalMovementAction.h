@@ -1,12 +1,12 @@
 #ifndef DIRECTIONAL_MOVEMENT_ACTION_H
 #define DIRECTIONAL_MOVEMENT_ACTION_H
 
-#include "action/Action.h"
+#include "action/MovementAction.h"
 #include "data/Direction.h"
 
 namespace vm {
 
-class DirectionalMovementAction : Action{
+class DirectionalMovementAction : public MovementAction{
 
 	private:
 		Direction d;

@@ -1,5 +1,5 @@
 #ifndef KEY_INPUT_H
-#define Key_INPUT_H
+#define KEY_INPUT_H
 #include "controller/Input.h"
 
 namespace vm {

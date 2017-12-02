@@ -1,7 +1,7 @@
 #ifndef SIMPLE_COMMAND_H
 #define SIMPLE_COMMAND_H
 
-#include "state/mode/Command.h"
+#include "state/command/Command.h"
 
 namespace vm {
 class SimpleCommand : Command {
@@ -12,10 +12,11 @@ class SimpleCommand : Command {
 	public:
 		SimpleCommand(char name, std::unique_ptr<Action> a): 
 			Command{name}, a{std::move(a)} {}
-		std::unique_ptr<Action> getAction(Command* c = nullptr) override {
-			return a;
+
+		std::unique_ptr<Action> getAction(char key=0) override {
+			return std::move(a);
 		}
-		~Command() {}
+		~SimpleCommand() override{}
 };
 
 }

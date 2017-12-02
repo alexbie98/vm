@@ -1,5 +1,5 @@
-#ifndef CURSES_H
-#define CURSES_H
+#ifndef CURSES_INSTANCE_H
+#define CURSES_INSTANCE_H
 #include <ncurses.h>
 #include "curses/CursesWindow.h"
 #include "data/Pos.h"

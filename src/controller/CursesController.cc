@@ -1,5 +1,5 @@
 #include "controller/CursesController.h"
-#include "controller/CursesInput.h"
+#include "controller/KeyInput.h"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ CursesController::~CursesController() {}
 
 unique_ptr<Input> CursesController::getInput(){
 	char c = cInst.getCh();
-	return make_unique<CursesInput>(c);
+	return make_unique<KeyInput>(c);
 }
 
 

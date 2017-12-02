@@ -1,5 +1,6 @@
-#ifndef INPUT_PARSER_H
-#define INPUT_PARSER_H
+#ifndef COMMAND_MODE_INPUT_PARSER_H
+#define COMMAND_MODE_INPUT_PARSER_H
+
 #include <memory>
 #include <string>
 #include <map>
@@ -9,7 +10,7 @@ namespace  vm {
 
 class Command;
 
-class CommandModeInputParser {
+class CommandModeInputParser : public InputParser{
 
 	private:
 		size_t decimal;
@@ -17,7 +18,7 @@ class CommandModeInputParser {
 		size_t multiplier;
 		
 		std::map<char,std::unique_ptr<Command>> commandMap;
-		Command* current;
+		std::unique_ptr<Command> current;
 		
 		void addEntries();
 		void reset();
