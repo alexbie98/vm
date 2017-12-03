@@ -19,7 +19,7 @@ class SyntaxHighlighter;
 
 class File{
   std::string name;
-  std::vector<std::string> lines;
+  std::vector<std::string> lines; //Invariant: No line ever contains a newline
   Pos cursorPos;
   IndicatorPack indicatorPack;
   const SyntaxHighlighter *syntaxHighlighter;
@@ -86,7 +86,7 @@ public:
   void undo();
 
   void parseAttributes();
-  void setSyntaxHighlighter(const SyntaxHighlighter &s);
+  void setSyntaxHighlighter(const SyntaxHighlighter *s);
 
   const IndicatorPack &getIndicatorPack() const;
   IndicatorPack &getIndicatorPack();

@@ -179,6 +179,8 @@ void File::undo(){
 }
 
 void File::parseAttributes(){
+	if(syntaxHighlighter == nullptr) return;
+
 	indicatorPack.rangeIndicators.clear();
 	indicatorPack.wordIndicators.clear();
 
@@ -231,8 +233,8 @@ void File::parseAttributes(){
 	}
 }
 
-void File::setSyntaxHighlighter(const SyntaxHighlighter &s){
-	syntaxHighlighter = &s;
+void File::setSyntaxHighlighter(const SyntaxHighlighter *s){
+	syntaxHighlighter = s;
 }
 
 }

@@ -53,7 +53,9 @@ class State: public Subject<State,Event>{
 
 		void executeAction();
 
-		std::unordered_map<std::string, SyntaxHighlighter> extHighlighters;
+		std::vector<std::unique_ptr<SyntaxHighlighter>> syntaxHighlighters;
+		std::unordered_map<std::string, SyntaxHighlighter*> extHighlighters;
+		void initExtHighlighters();
 
 	public:
 		// Prior to any function that triggers an event,

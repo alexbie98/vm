@@ -12,6 +12,7 @@ protected:
   const int precedence;
   const int syntax;
 public:
+  WordAttribute(int precedence, int syntax):precedence{precedence}, syntax{syntax}{}
   virtual bool matches(ConstWordIterator it) = 0;
 };
 
