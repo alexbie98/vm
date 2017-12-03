@@ -7,6 +7,7 @@
 #include "action/ChangeModeAction.h"
 #include "state/mode/CommandMode.h"
 #include <ncurses.h>
+#include <iostream>
 
 using namespace std;
 
@@ -14,9 +15,10 @@ namespace vm {
 
 InsertModeInputParser::InsertModeInputParser() {}
 
-unique_ptr<Action> InsertModeInputParser::parseInput(unique_ptr<KeyInput> in){
+unique_ptr<Action> InsertModeInputParser::parseInput(KeyInput* in){
 	int key = in->getKey();
 	
+	cout << key << endl;
 	switch (key){
 		// ASCII 27 = esc key
 		case 27: return make_unique<ChangeModeAction>(typeid(CommandMode));
@@ -25,7 +27,6 @@ unique_ptr<Action> InsertModeInputParser::parseInput(unique_ptr<KeyInput> in){
 		case KEY_DOWN: return make_unique<DirectionalMovementAction>(DOWN);
 		case KEY_LEFT: return make_unique<DirectionalMovementAction>(LEFT);
 		case KEY_RIGHT: return make_unique<DirectionalMovementAction>(RIGHT);
-		
 		case KEY_BACKSPACE: return make_unique<DeleteAction>();
 		default: {
 			if (key>=32 && key<=126){ //needs to go in helper

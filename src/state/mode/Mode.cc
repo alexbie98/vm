@@ -15,7 +15,7 @@ Mode::Mode(unique_ptr<InputParser> parser,const string& name):
 
 Mode::~Mode() {}
 
-unique_ptr<Action> Mode::parseInput(unique_ptr<Input> input){
+unique_ptr<Action> Mode::parseInput(Input* input){
 	return input->beParsedBy(*parser);
 }
 

@@ -14,7 +14,7 @@ class InputParser {
 
 	public:
 		virtual std::unique_ptr<Action> 
-			parseInput(std::unique_ptr<KeyInput> in) = 0;
+			parseInput(KeyInput* in) = 0;
 
 		virtual ~InputParser() {}
 };

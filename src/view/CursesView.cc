@@ -32,6 +32,8 @@ namespace vm {
 			case FILE_ADDED:
 				draw(subject);
 				break;
+			case ACTION_EXECUTED:
+				draw(subject);
 			default:
 				break;
 		}

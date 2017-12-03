@@ -23,7 +23,7 @@ class Mode {
 		virtual ~Mode();
 		
 		std::string getName();
-		std::unique_ptr<Action> parseInput(std::unique_ptr<Input> input);
+		std::unique_ptr<Action> parseInput(Input* input);
 		virtual void onEnter() = 0;
 		virtual void onExit() = 0;
 		virtual void reset() = 0;

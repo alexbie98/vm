@@ -26,7 +26,7 @@ CommandModeInputParser::CommandModeInputParser(): decimal{1}, numBuffer{0},
 }
 
 
-unique_ptr<Action> CommandModeInputParser::parseInput(unique_ptr<KeyInput> in){
+unique_ptr<Action> CommandModeInputParser::parseInput(KeyInput* in){
 	int key = in->getKey();
 
 	return unique_ptr<Action>{};

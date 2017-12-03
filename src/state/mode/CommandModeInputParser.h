@@ -27,8 +27,7 @@ class CommandModeInputParser : public InputParser{
 
 		CommandModeInputParser();
 
-		std::unique_ptr<Action> 
-			parseInput(std::unique_ptr<KeyInput> in) override;
+		std::unique_ptr<Action> parseInput(KeyInput* in) override;
 
 		~CommandModeInputParser() override;
 };

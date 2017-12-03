@@ -11,7 +11,7 @@ CursesController::CursesController(curses::CursesInstance& cInst):
 CursesController::~CursesController() {}
 
 unique_ptr<Input> CursesController::getInput(){
-	int c = cInst.getCh();
+	int c = cInst.getChar();
 	return make_unique<KeyInput>(c);
 }
 

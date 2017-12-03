@@ -13,8 +13,7 @@ class ReplaceModeInputParser : public InputParser{
 
 		ReplaceModeInputParser();
 
-		std::unique_ptr<Action> 
-			parseInput(std::unique_ptr<KeyInput> in) override;
+		std::unique_ptr<Action> parseInput(KeyInput* in) override;
 
 		~ReplaceModeInputParser() override;
 };

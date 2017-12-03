@@ -14,6 +14,8 @@
 #include <vector>
 #include <string>
 #include "state/SyntaxConstants.h"
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -33,7 +35,8 @@ State::State(): runStatus{RUNNING}, commandMode{new CommandMode()},
 State::~State(){}
 
 void State::initExtHighlighters(){
-	unique_ptr<SyntaxHighlighter> cpp;
+
+	unique_ptr<SyntaxHighlighter> cpp = make_unique<SyntaxHighlighter>();
 
 	// Add range and word attributes
 	cpp->rangeAttributes.push_back(RangeAttribute(syntax::DoubleQuotes, "\"", "\""));
@@ -45,8 +48,8 @@ void State::initExtHighlighters(){
 	syntaxHighlighters.push_back(std::move(cpp));
 
 	// Correspond file extensions with respective syntax highlighters
-	extHighlighters[".cc"] = cpp.get();
-	extHighlighters[".h"] = cpp.get();
+	extHighlighters[".cc"] = syntaxHighlighters[0].get();
+	extHighlighters[".h"] = syntaxHighlighters[0].get();
 }
 
 void State::addFile(const std::string& file){
@@ -78,11 +81,14 @@ int State::getRunStatus() const{
 }
 
 void State::handleInput(unique_ptr<Input> input){
-	std::unique_ptr<Action> action = activeMode->parseInput(move(input));
-	try {
-		action->execute(*this);
+	std::unique_ptr<Action> action = activeMode->parseInput(input.get());
+	if (action){
+		cout << "action triggered!" << endl;
+		try {
+			action->execute(*this);
+		} catch(...){}
 	}
-	catch(...){}
+	notifyAll(ACTION_EXECUTED);
 }
 
 

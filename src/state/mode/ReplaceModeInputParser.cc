@@ -14,7 +14,7 @@ namespace vm {
 
 ReplaceModeInputParser::ReplaceModeInputParser() {}
 
-unique_ptr<Action> ReplaceModeInputParser::parseInput(unique_ptr<KeyInput> in){
+unique_ptr<Action> ReplaceModeInputParser::parseInput(KeyInput* in){
 	int key = in->getKey();
 	
 	switch (key){

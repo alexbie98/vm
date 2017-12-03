@@ -10,7 +10,7 @@ namespace vm {
 
 TerminalModeInputParser::TerminalModeInputParser() {}
 
-unique_ptr<Action> TerminalModeInputParser::parseInput(unique_ptr<KeyInput> in){
+unique_ptr<Action> TerminalModeInputParser::parseInput(KeyInput* in){
 	int key = in->getKey();
 	return unique_ptr<Action>{};
 }

@@ -12,7 +12,7 @@ class TerminalModeInputParser : public InputParser{
 		TerminalModeInputParser();
 
 		std::unique_ptr<Action> 
-			parseInput(std::unique_ptr<KeyInput> in) override;
+			parseInput(KeyInput* in) override;
 
 		~TerminalModeInputParser() override;
 };

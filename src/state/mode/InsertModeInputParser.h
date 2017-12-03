@@ -13,8 +13,7 @@ class InsertModeInputParser : public InputParser{
 
 		InsertModeInputParser();
 
-		std::unique_ptr<Action> 
-			parseInput(std::unique_ptr<KeyInput> in) override;
+		std::unique_ptr<Action> parseInput(KeyInput* in) override;
 
 		~InsertModeInputParser() override;
 };
