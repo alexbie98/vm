@@ -21,6 +21,13 @@ size_t Action::getMultiplier() const{
 	return multi;
 }
 
+void Action::addNextAction(Action * newAction){
+	if (!nextAction) {
+		nextAction = unique_ptr<Action>{newAction};
+	}
+	else nextAction->addNextAction(newAction);
+}
+
 Action::~Action(){}
 
 }

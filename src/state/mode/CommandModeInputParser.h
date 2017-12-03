@@ -17,13 +17,14 @@ class CommandModeInputParser : public InputParser{
 		size_t numBuffer;
 		size_t multiplier;
 		
-		std::map<char,std::unique_ptr<Command>> commandMap;
+		std::map<int,std::unique_ptr<Command>> commandMap;
 		std::unique_ptr<Command> current;
 		
 		void addEntries();
-		void reset();
 
 	public:
+		void reset();
+
 		CommandModeInputParser();
 
 		std::unique_ptr<Action> 

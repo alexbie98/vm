@@ -13,10 +13,9 @@ class CCommand : public Command {
 		std::unique_ptr<MovementAction> movement;
 	public:
 		CCommand(): Command{'c'} {}
-		std::unique_ptr<Action> getAction(char key) override {
+		std::unique_ptr<Action> getAction(int key) override {
 			
 
-			std::make_unique<DeleteComman>
 		}		
 		~AtCommand() override {}
 }

@@ -12,14 +12,15 @@ class Action {
 
 
 	private:
-		size_t multi;
 		virtual void doAction(State& context) = 0;
 	
 	protected:
+		size_t multi;
 		std::unique_ptr<Action> nextAction;
 
 	public:
 		Action(size_t multi, std::unique_ptr<Action> nextAction);
+		void addNextAction(Action * next);
 		void setMultiplier(size_t multi);
 		size_t getMultiplier() const;
 		void execute(State& context);

@@ -6,12 +6,22 @@ using namespace std;
 
 namespace vm {
 
-Mode::Mode(InputParser* parser): parser{parser} {}
+InputParser* Mode::getParser(){
+	return parser.get();
+}
+
+Mode::Mode(unique_ptr<InputParser> parser,const string& name): 
+	parser{move(parser)}, name{name} {}
 
 Mode::~Mode() {}
 
 unique_ptr<Action> Mode::parseInput(unique_ptr<Input> input){
 	return input->beParsedBy(*parser);
 }
+
+string Mode::getName(){
+	return name;
+}
+
 
 }

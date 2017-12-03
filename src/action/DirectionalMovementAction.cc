@@ -1,7 +1,6 @@
 #include "action/DirectionalMovementAction.h"
 #include "state/State.h"
 #include "state/File.h"
-#include <memory>
 
 using namespace std;
 namespace vm {
@@ -18,7 +17,7 @@ unique_ptr<Action> DirectionalMovementAction::clone(){
 	unique_ptr<Action> nextClone;
 	if (nextAction) nextClone = nextAction->clone();
 	
-	return make_unique<DirectionalMovementAction>(d, getMultiplier(), 
+	return make_unique<DirectionalMovementAction>(d, multi, 
 			move(nextClone));
 }
 

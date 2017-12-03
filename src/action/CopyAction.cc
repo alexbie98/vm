@@ -15,6 +15,16 @@ CopyAction::CopyAction(unique_ptr<MovementAction> movement, size_t multi,
 		unique_ptr<Action> nextAction): 
 	MovementModifiableAction{move(movement), multi, move(nextAction)} {}
 
+unique_ptr<Action> CopyAction::clone() {
+	unique_ptr<Action> nextClone;
+	if (nextAction) nextClone = nextAction->clone();
+
+	unique_ptr<MovementAction> movementClone{
+		dynamic_cast<MovementAction*>(getMovement()->clone().release())};
+
+	return make_unique<CopyAction>(move(movementClone), multi, 
+			move(nextClone));
+}
 CopyAction::~CopyAction() {}
 
 }

@@ -1,11 +1,11 @@
 #ifndef PASTE_ACTION_H
 #define PASTE_ACTION_H
 
-#include "action/Action.h"
+#include "action/TextChangeAction.h"
 
 namespace vm {
 
-class PasteAction : public Action {
+class PasteAction : public TextChangeAction {
 
 	private:
 		void doAction(State& context) override;
@@ -13,6 +13,8 @@ class PasteAction : public Action {
 	public:
 		PasteAction(size_t multi = 1, std::unique_ptr<Action> nextAction
 				= std::unique_ptr<Action>{});
+
+		std::unique_ptr<Action> clone() override;
 		~PasteAction() override;
 };
 

@@ -4,6 +4,7 @@
 #include "state/mode/Mode.h"
 #include "state/mode/CommandMode.h"
 #include "state/mode/InsertMode.h"
+#include "state/mode/ReplaceMode.h"
 #include "state/mode/TerminalMode.h"
 #include "controller/Input.h"
 #include "util/FileReader.h"
@@ -23,8 +24,10 @@ const int State::SAFE_EXIT = 0;
 const int State::ERROR_EXIT = 2;
 
 State::State(): runStatus{RUNNING}, commandMode{new CommandMode()},
-	insertMode{new InsertMode()}, terminalMode{new TerminalMode()} {
+	insertMode{new InsertMode()}, replaceMode{new ReplaceMode()}, 
+	terminalMode{new TerminalMode()}, buildingMacro{false} {
 		initExtHighlighters();
+		activeMode = insertMode.get();
 	}
 
 State::~State(){}
@@ -75,8 +78,11 @@ int State::getRunStatus() const{
 }
 
 void State::handleInput(unique_ptr<Input> input){
-	// std::unique_ptr<Action> action = activeMode->parseInput(move(input));
-	// action->execute(*this);
+	std::unique_ptr<Action> action = activeMode->parseInput(move(input));
+	try {
+		action->execute(*this);
+	}
+	catch(...){}
 }
 
 
@@ -88,18 +94,20 @@ const File& State::getFile() const {
 	return *activeFile;
 }
 
-void State::setActiveMode(Mode* nextMode){
+void State::setActiveMode(const type_info& nextMode){
 	activeMode->onExit();
-	activeMode = nextMode;
-	nextMode->onEnter();
+
+	if (nextMode == typeid(CommandMode)) activeMode = commandMode.get();
+	else if (nextMode == typeid(InsertMode)) activeMode = insertMode.get();
+	else if (nextMode == typeid(ReplaceMode)) activeMode = replaceMode.get();
+	else if (nextMode == typeid(TerminalMode)) activeMode = terminalMode.get();
+	else throw;
+
+	activeMode->onEnter();
 }
 
 Mode& State::getMode(){
 	return *activeMode;
-}
-
-const File& State::getMode() const {
-	return *activeFile;
 }
 
 
@@ -111,5 +119,14 @@ State::Register& State::getRegister() {
 State::Register::Register(): paste{}, strSearch{}, charSearch{0},
  lastChangeAction{}, macroMap{}, scrollLength{0} {}
 
+void State::startNewMacro(){
+	buildingMacro = true;
+}
+
+unique_ptr<Action> State::saveCurrentMacro(){
+	buildingMacro = false;
+	return move(reg.currentMacro);
+
+}
 
 }

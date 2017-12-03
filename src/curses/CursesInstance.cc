@@ -10,6 +10,12 @@ CursesInstance::CursesInstance(){
 	use_default_colors();
 	size_t height, width;
 	getmaxyx(stdscr, height, width);
+
+	//input init
+	nodelay(stdscr,TRUE);
+	keypad(stdscr,TRUE);
+	noecho();
+	cbreak();
 }
 
 CursesInstance::~CursesInstance(){
@@ -37,8 +43,8 @@ size_t CursesInstance::getScreenWidth()const{
 	return width;
 }
 
-char CursesInstance::getCh(){
-
+int CursesInstance::getCh(){
+	return getCh();
 }
 
 void CursesInstance::initColorPair(int color_number, int fg_color, int bg_color){

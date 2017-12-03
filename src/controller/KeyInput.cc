@@ -6,7 +6,7 @@ using namespace std;
 
 namespace vm {
 
-KeyInput::KeyInput(char key): key{key} {}
+KeyInput::KeyInput(int key): key{key} {}
 
 KeyInput::~KeyInput() {}
 
@@ -14,7 +14,7 @@ std::unique_ptr<Action> KeyInput::beParsedBy(InputParser& parser) {
 	return parser.parseInput(unique_ptr<KeyInput>(this));
 }
 
-char KeyInput::getKey(){
+int KeyInput::getKey(){
 	return key;
 }
 

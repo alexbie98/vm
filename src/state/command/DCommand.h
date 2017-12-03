@@ -8,10 +8,10 @@ namespace vm {
 class DCommand : public Command {
 
 	private:
-		char macroKey;
+		int macroKey;
 	public:
-		AtCommand(char macroKey) macroKey{macroKey} {}
-		std::unique_ptr<Action> getAction(char key) override {
+		AtCommand(int macroKey) macroKey{macroKey} {}
+		std::unique_ptr<Action> getAction(int key) override {
 			return unique_ptr<Action>{};
 		}		
 		~AtCommand() override {}

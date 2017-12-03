@@ -10,10 +10,10 @@ class SimpleCommand : Command {
 		std::unique_ptr<Action> a;
 
 	public:
-		SimpleCommand(char name, std::unique_ptr<Action> a): 
+		SimpleCommand(int name, std::unique_ptr<Action> a): 
 			Command{name}, a{std::move(a)} {}
 
-		std::unique_ptr<Action> getAction(char key=0) override {
+		std::unique_ptr<Action> getAction(int key = 0) override {
 			return std::move(a);
 		}
 		~SimpleCommand() override{}

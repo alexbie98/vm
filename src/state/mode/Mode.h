@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "action/Action.h"
+#include <string>
 
 namespace vm {
 
@@ -14,14 +15,18 @@ class Mode {
 
 	private:
 		std::unique_ptr<InputParser> parser;
+		std::string name;
 	protected:
-		Mode(InputParser* parser);
+		Mode(std::unique_ptr<InputParser> parser, const std::string& name);
+		InputParser* getParser();
 	public:
-		virtual ~Mode() = 0;
-
+		virtual ~Mode();
+		
+		std::string getName();
 		std::unique_ptr<Action> parseInput(std::unique_ptr<Input> input);
 		virtual void onEnter() = 0;
 		virtual void onExit() = 0;
+		virtual void reset() = 0;
 
 
 };

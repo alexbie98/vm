@@ -1,17 +1,17 @@
-#ifndef INSERT_MODE_H
-#define INSERT_MODE_H
+#ifndef REPLACE_MODE_H
+#define REPLACE_MODE_H
 
 #include "state/mode/Mode.h"
 
 namespace vm {
 
-class InsertMode : public Mode {
+class ReplaceMode : public Mode {
 
 	private:
 		std::unique_ptr<Action> cumulativeAction;
 	public:
-		InsertMode();
-		~InsertMode();
+		ReplaceMode();
+		~ReplaceMode();
 
 		void onEnter() override;
 		void onExit() override;

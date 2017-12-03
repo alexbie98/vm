@@ -17,6 +17,7 @@ class CopyAction : public MovementModifiableAction {
 				size_t multi = 1, 
 				std::unique_ptr<Action> nextAction = std::unique_ptr<Action>{});
 
+		std::unique_ptr<Action> clone() override;
 		~CopyAction() override;
 };
 

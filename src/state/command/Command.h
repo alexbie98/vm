@@ -9,12 +9,12 @@ namespace vm {
 class Command{
 	
 	private:
-		char name;
+		int name;
 		bool isMovementCommand;
 	public:
-		Command(char name, bool isMovementCommand=false): name{name},
+		Command(int name, bool isMovementCommand=false): name{name},
 			isMovementCommand{isMovementCommand} {}
-		virtual std::unique_ptr<Action> getAction(char key);
+		virtual std::unique_ptr<Action> getAction(int key);
 		bool isMovement() { return isMovementCommand; }
 		bool operator==(const Command& other){ return name == other.name; }
 		virtual ~Command() {}

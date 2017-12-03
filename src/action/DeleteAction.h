@@ -2,6 +2,7 @@
 #define DELETE_ACTION_H
 
 #include "action/MovementModifiableAction.h"
+#include "action/DirectionalMovementAction.h"
 
 namespace vm {
 
@@ -13,7 +14,7 @@ class DeleteAction : public MovementModifiableAction {
 
 	public:
 		DeleteAction(std::unique_ptr<MovementAction> movement
-			 	= std::unique_ptr<MovementAction>{},
+			 	= std::make_unique<DirectionalMovementAction>(LEFT),
 				size_t multi = 1, 
 				std::unique_ptr<Action> nextAction = std::unique_ptr<Action>{});
 		

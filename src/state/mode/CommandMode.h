@@ -9,10 +9,11 @@ class CommandMode : public Mode {
 
 	public:
 		CommandMode();
-		~CommandMode();
+		~CommandMode() override;
 
-		void onEnter();
-		void onExit();
+		void onEnter() override;
+		void onExit() override;
+		void reset() override;
 };
 
 }

@@ -1,21 +1,20 @@
-#ifndef SAMPLE_ACTION_H
-#define SAMPLE_ACTION_H
+#ifndef SAVE_FILE_ACTION_H
+#define SAVE_FILE_ACTION_H
 
 #include "action/Action.h"
 
 namespace vm {
 
-class SampleAction : public Action {
+class SaveFileAction : public Action {
 
 	private:
 		void doAction(State& context) override;
 
 	public:
-		SampleAction(size_t multi = 1, std::unique_ptr<Action> nextAction
+		SaveFileAction(std::unique_ptr<Action> nextAction
 				= std::unique_ptr<Action>{});
 		std::unique_ptr<Action> clone() override;
-		~SampleAction() override;
-
+		~SaveFileAction() override;
 };
 
 }

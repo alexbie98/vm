@@ -11,7 +11,7 @@ class CursesInstance {
 public:
 	CursesInstance();
 	~CursesInstance();
-	char getCh();
+	int getCh();
 
 	size_t getScreenHeight()const;
 	size_t getScreenWidth()const;

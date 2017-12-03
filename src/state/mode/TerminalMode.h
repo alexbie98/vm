@@ -11,8 +11,9 @@ class TerminalMode : public Mode {
 		TerminalMode();
 		~TerminalMode();
 
-		void onEnter();
-		void onExit();
+		void onEnter() override;
+		void onExit() override;
+		void reset() override;
 };
 
 }

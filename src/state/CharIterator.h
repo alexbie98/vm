@@ -18,9 +18,9 @@ class ConstCharIterator {
 		Pos filePos;
 
 		ConstCharIterator(const std::vector<std::string>& data, Pos filePos);
-		ConstCharIterator(const ConstCharIterator &other);
 
 	public:
+		ConstCharIterator(const ConstCharIterator &other);
 		bool operator!=(const ConstCharIterator &other) const;
 		const char& operator*() const;
 		ConstCharIterator operator++();
@@ -43,9 +43,9 @@ class CharIterator {
 		Pos filePos;
 
 		CharIterator(std::vector<std::string>& data, Pos filePos);
-		CharIterator(const CharIterator &other);
 
 	public:
+		CharIterator(const CharIterator &other);
 		bool operator!=(const CharIterator &other) const;
 		char& operator*() const;
 		CharIterator operator++();

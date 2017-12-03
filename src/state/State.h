@@ -4,7 +4,6 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <map>
 #include <unordered_map>
 #include <memory>
 #include "state/SyntaxHighlighter.h"
@@ -20,6 +19,7 @@ class Mode;
 
 class CommandMode;
 class InsertMode;
+class ReplaceMode;
 class TerminalMode;
 
 class Action;
@@ -32,7 +32,8 @@ class State: public Subject<State,Event>{
 			std::string strSearch;
 			char charSearch;
 			std::unique_ptr<Action> lastChangeAction;
-			std::unordered_map<char, std::unique_ptr<Action>> macroMap;
+			std::unordered_map<int, std::unique_ptr<Action>> macroMap;
+			std::unique_ptr<Action> currentMacro;
 			size_t scrollLength;
 			private:
 				Register();
@@ -47,9 +48,11 @@ class State: public Subject<State,Event>{
 
 		std::unique_ptr<CommandMode> commandMode;
 		std::unique_ptr<InsertMode> insertMode;
+		std::unique_ptr<ReplaceMode> replaceMode;
 		std::unique_ptr<TerminalMode> terminalMode;
 
 		Register reg;
+		bool buildingMacro;
 
 		void executeAction();
 
@@ -78,11 +81,12 @@ class State: public Subject<State,Event>{
 		File& getFile();
 		const File& getFile() const;
 
-		void setActiveMode(Mode* nextMode);
+		void setActiveMode(const std::type_info& nextMode);
 		Mode& getMode();
-		const File& getMode() const;
 
 		Register& getRegister();
+		void startNewMacro();
+		std::unique_ptr<Action> saveCurrentMacro();
 		//TODO add tabsize constant?
 };
 
