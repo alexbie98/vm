@@ -62,15 +62,15 @@ CharIterator File::charEnd(){
 
 // WordIterator functions -------------------------------------------------
 
-ConstWordIterator File::MakeWordIterator(Pos pos){
+ConstWordIterator File::MakeWordIterator(Pos pos) const{
 	return ConstWordIterator(lines, pos);
 }
 
-ConstWordIterator File::wordBegin(){
+ConstWordIterator File::wordBegin() const{
 	return ConstWordIterator(lines, Pos(0,0));
 }
 
-ConstWordIterator File::wordEnd(){
+ConstWordIterator File::wordEnd() const{
 	return ConstWordIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size()));
 }
 
@@ -79,13 +79,22 @@ const string& File::getName() const {
 	return name;
 }
 
+string File::getFileExtension() const{
+	return name.substr(name.find_last_of(".")+1);
+}
+
 string File::getString(Pos start, Pos end) const {
-	return "";
+	if(!isValidPos(start) || !isValidPos(end)) throw BadOperationErr{};
+	//TODO:
 }
 
 const std::vector<string>& File::getLines() const {
 	return lines;
 
+}
+
+bool File::isValidPos(Pos p) const {
+	return (p.y<lines.size() && p.x < lines[p.y].length());
 }
 
 Pos File::getCursorPos() const {
@@ -94,21 +103,21 @@ Pos File::getCursorPos() const {
 
 Pos File::toScreenCoords(Pos lineCoords) const{
 	return Pos{};
+	//TODO:
 }
 
 Pos File::toLineCoords(Pos screenCoords) const{
 	return Pos{};
+	//TODO:
 }
 
 void File::setCursorPos(Pos p){
-	if (p.y<lines.size() && p.x < lines[p.y].length()){
-		cursorPos = p;
-	}
-	else throw BadOperationErr{};
+	if (!isValidPos(p)) throw BadOperationErr{};
+	cursorPos = p;
 }
 
 void File::moveCursor(Direction d){
-
+	
 	Pos screen;
 	switch (d) {
 		case UP: {
@@ -138,44 +147,45 @@ void File::moveCursor(Direction d){
 	}
 }
 
+
+void File::addString(string s, Pos pos){
+	//TODO:
+	
+}
+
+void File::addLines(vector<string> newLines, size_t lineNumber){
+	//TODO:
+}
+
+void File::replaceString(string s, Pos pos){
+	//TODO:
+}
+
+void File::replaceLines(vector<string> newLines, size_t lineNumber){
+	//TODO:
+}
+
+void File::removeString(Pos start, Pos end){
+	//TODO:
+}
+
+void File::removeLines(size_t start, size_t end){
+	//TODO:
+}
+
+// difference tracking ----------------------------------------------------
+
+void File::undo(){
+}
+
+// Syntax Highlighting ------------------------------------------------------
+
 const IndicatorPack& File::getIndicatorPack() const{
 	return indicatorPack;
 }
 
 IndicatorPack& File::getIndicatorPack(){
 	return indicatorPack;
-}
-
-const std::string& File::getFileExtension(){
-	return fileExtension;
-}
-
-void File::addString(string s, Pos pos){
-  //TODO
-}
-
-void File::addLines(vector<string> newLines, size_t lineNumber){
-  //TODO
-}
-
-void File::replaceString(string s, Pos pos){
-  //TODO
-}
-
-void File::replaceLines(vector<string> newLines, size_t lineNumber){
-  //TODO
-}
-
-void File::removeString(Pos start, Pos end){
-  //TODO
-}
-
-void File::removeLines(size_t start, size_t end){
-  //TODO
-}
-
-void File::undo(){
-  //TODO
 }
 
 void File::parseAttributes(){
