@@ -7,7 +7,7 @@ using namespace std;
 namespace vm {
 
 void InsertionAction::doAction(State& context) {
-	Pos current = context.getFile().toLineCoords(context.getFile().getCursorPos());
+	Pos current = context.getFile().getCursorPos();
 	context.getFile().addString(toInsert, current);
 }
 

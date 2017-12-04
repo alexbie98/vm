@@ -15,9 +15,9 @@ void MovementModifiableAction::doAction(State& context){
 
 	File& f = context.getFile();
 
-	Pos start = f.toLineCoords(f.getCursorPos());
+	Pos start = f.getCursorPos();
 	if (movement) movement->execute(context);
-	Pos end = f.toLineCoords(f.getCursorPos());
+	Pos end = f.getCursorPos();
 
 	if (end.y < start.y || (end.y == start.y && end.x < start.x)){
 		swap(start,end);

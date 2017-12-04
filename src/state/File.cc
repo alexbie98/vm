@@ -9,7 +9,7 @@ using namespace std;
 namespace vm {
 
 File::File(const string& name, vector<string> lines): name{name},
-	lines{lines}, cursorPos{Pos{1,1}} {}
+	lines{lines}, cursorPos{Pos{0,0}} {}
 
 File::~File(){}
 
@@ -118,8 +118,9 @@ Pos File::getCursorPos() const {
 }
 
 Pos File::toScreenCoords(Pos lineCoords) const{
-	Pos screenCoords; if(lineCoords.x != string::npos){
-		string s = lines[lineCoords.y].substr(0, lineCoords.x);
+	Pos screenCoords; 
+	if(lineCoords.x != string::npos){
+		string s = lines[lineCoords.y].substr(0, lineCoords.x+1);
 		size_t tabs = count(s.begin(),s.end(), '\t');
 		screenCoords.x = tabs*(utils::tabSize-1)+s.length();
 	}
@@ -140,37 +141,42 @@ Pos File::toLineCoords(Pos screenCoords) const{
 
 
 void File::moveCursor(Direction d){
-
-	Pos line;
+	Pos screen;
 	switch (d) {
 		case UP: {
-			if (cursorPos.y == 1) throw BadOperationErr{};
-			cursorPos.y--;
-			line = toLineCoords(cursorPos);
-			setCursorPos(toScreenCoords(toLineCoords(cursorPos)));
+			if (cursorPos.y == 0) throw BadOperationErr{};
+			screen = toScreenCoords(cursorPos);
+			screen.y--;
+			setCursorPos(toLineCoords(screen));
+			if (cursorPos.x == string::npos && lines[cursorPos.y].length()>0){
+				cursorPos.x++;	
+			}
 			break;
 		}
 		case DOWN: {
-			if (cursorPos.y == lines.size()) throw BadOperationErr{};
-			cursorPos.y++;
-			setCursorPos(toScreenCoords(toLineCoords(cursorPos)));
+			if (cursorPos.y == lines.size()-1) throw BadOperationErr{};
+			screen = toScreenCoords(cursorPos);
+			screen.y++;
+			setCursorPos(toLineCoords(screen));
+			if (cursorPos.x == string::npos && lines[cursorPos.y].length()>0){
+				cursorPos.x++;	
+			}
 			break;
 		}
 		case LEFT: {
-			line = toLineCoords(cursorPos);
-			if (line.x == string::npos || line.x == 0) throw BadOperationErr{};
-			line.x--;
-			setCursorPos(toScreenCoords(line));
+			if (cursorPos.x==0 || cursorPos.x == string::npos) throw BadOperationErr{};
+			cursorPos.x--;
 			break;
 		}
 		case RIGHT: {
-			line = toLineCoords(cursorPos);
-			if (line.x == lines[cursorPos.y].size()-1) throw BadOperationErr{};
-			line.x++;
-			setCursorPos(toScreenCoords(line));
+			if (cursorPos.x == lines[cursorPos.y].size()-1) throw BadOperationErr{};
+			cursorPos.x++;
 			break;
 		}
 	}
+	cout << cursorPos.x << " " << cursorPos.y << endl;
+	//line = toLineCoords(cursorPos);
+	//cout << line.x <<" "<<line.y<< endl;
 }
 
 

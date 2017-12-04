@@ -18,7 +18,6 @@ InsertModeInputParser::InsertModeInputParser() {}
 unique_ptr<Action> InsertModeInputParser::parseInput(KeyInput* in){
 	int key = in->getKey();
 	
-	cout << key << endl;
 	switch (key){
 		// ASCII 27 = esc key
 		case 27: return make_unique<ChangeModeAction>(typeid(CommandMode));

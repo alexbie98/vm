@@ -85,7 +85,7 @@ class File{
 		void replaceLines(std::vector<std::string> newLines, size_t lineNumber);
 		void removeString(Pos start, Pos end);
 		void removeLines(size_t start, size_t end);
-
+	
 		// diffstack functions
 		void undo();
 

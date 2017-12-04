@@ -8,7 +8,7 @@ namespace vm {
 void DeleteAction::performOp(State& context, Pos start, Pos end){
 	File& f = context.getFile();
 	f.removeString(start, end);
-	f.setCursorPos(f.toScreenCoords(start));
+	f.setCursorPos(start);
 }
 
 DeleteAction::DeleteAction(unique_ptr<Action> movement, size_t multi,

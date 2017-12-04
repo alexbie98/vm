@@ -1,5 +1,5 @@
 #include "Editor.h"
-
+#include <ncurses.h>
 using namespace std;
 namespace vm {
 
