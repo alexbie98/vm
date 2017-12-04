@@ -15,7 +15,7 @@ public:
   syntax{syntax}, startIndicator{startIndicator}, endIndicator{endIndicator}{}
   const std::string &getStartIndicator()const{return startIndicator;}
   const std::string &getEndIndicator()const{return endIndicator;}
-
+  int getSyntax() const {return syntax;}
 };
 }
 

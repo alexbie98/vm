@@ -21,6 +21,7 @@ class File{
 
 	private:
 		std::string name;
+    //TODO if file is empty, add in one empty line.
 		std::vector<std::string> lines; //Invariant: No line ever contains a newline
 		Pos cursorPos;
 		IndicatorPack indicatorPack;

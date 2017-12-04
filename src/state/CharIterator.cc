@@ -7,7 +7,9 @@ namespace vm {
 // ConstCharIterator implementations ----------------------------------------
 
 ConstCharIterator::ConstCharIterator(const vector<string>& data,
-	Pos filePos): data{data}, filePos{filePos} {}
+	Pos filePos): data{data}, filePos{filePos} {
+		while(data[filePos.y].size() == 0 && filePos.y < data.size()) filePos.y++;
+	}
 
 ConstCharIterator::ConstCharIterator(const ConstCharIterator &other):
   data{other.data}, filePos{other.filePos}{}
@@ -20,10 +22,11 @@ const char& ConstCharIterator::operator*() const {
 	return data[filePos.y][filePos.x];
 }
 
-ConstCharIterator ConstCharIterator::operator++(){
+ConstCharIterator ConstCharIterator::operator++(){//TODO wp
   if(filePos.x == data[filePos.y].size() - 1){
     filePos.x = 0;
     filePos.y++;
+		while(data[filePos.y].size() == 0 && filePos.y < data.size()) filePos.y++;
   }
   else filePos.x++;
 	return *this;
@@ -46,7 +49,9 @@ Pos ConstCharIterator::getPos() const{
 // CharIterator implementations ----------------------------------------
 
 CharIterator::CharIterator(vector<string>& data, Pos filePos):
-	data{data}, filePos{filePos} {}
+	data{data}, filePos{filePos} {
+		while(data[filePos.y].size() == 0 && filePos.y < data.size()) filePos.y++;
+	}
 
 CharIterator::CharIterator(const CharIterator &other):
   data{other.data}, filePos{other.filePos}{}
@@ -63,6 +68,7 @@ CharIterator CharIterator::operator++(){//TODO wp
   if(filePos.x == data[filePos.y].size() - 1){
     filePos.x = 0;
     filePos.y++;
+		while(data[filePos.y].size() == 0 && filePos.y < data.size()) filePos.y++;
   }
   else filePos.x++;
 	return *this;

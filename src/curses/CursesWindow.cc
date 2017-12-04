@@ -64,12 +64,12 @@ bool CursesWindow::disableAttribute(int attr){
 	return wattroff(rawWin, attr) == OK;
 }
 
-bool CursesWindow::drawString(std::string s, int x, int y){
+bool CursesWindow::drawString(std::string s, size_t x, size_t y){
 	//return mvwprintw(rawWin, y, x, s.c_str()) == OK;
 	return mvwaddstr(rawWin, y, x, s.c_str()) == OK;
 }
 
-bool CursesWindow::drawString(std::string s, int x, int y, int color_number){
+bool CursesWindow::drawString(std::string s, size_t x, size_t y, int color_number){
 	bool result;
 	wattron(rawWin, COLOR_PAIR(color_number));
 	result = mvwaddstr(rawWin, y, x, s.c_str()) == OK;

@@ -1,5 +1,7 @@
 #include "state/File.h"
 #include "state/SyntaxHighlighter.h"
+#include <utility>
+#include <iostream>
 
 using namespace std;
 namespace vm {
@@ -45,7 +47,7 @@ ConstCharIterator File::charBegin() const {
 }
 
 ConstCharIterator File::charEnd() const {
-	return ConstCharIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size()));
+	return ConstCharIterator(lines, Pos(0,lines.size()));
 }
 
 CharIterator File::MakeCharIterator(Pos pos){
@@ -57,7 +59,7 @@ CharIterator File::charBegin(){
 }
 
 CharIterator File::charEnd(){
-	return CharIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size()));
+	return CharIterator(lines, Pos(0,lines.size()));
 }
 
 // WordIterator functions -------------------------------------------------
@@ -71,7 +73,7 @@ ConstWordIterator File::wordBegin() const{
 }
 
 ConstWordIterator File::wordEnd() const{
-	return ConstWordIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size()));
+	return ConstWordIterator(lines, Pos(lines[lines.size() - 1].size(),lines.size() - 1));
 }
 
 // ------------------------------------------------------------------------
@@ -117,7 +119,7 @@ void File::setCursorPos(Pos p){
 }
 
 void File::moveCursor(Direction d){
-	
+
 	Pos screen;
 	switch (d) {
 		case UP: {
@@ -150,7 +152,7 @@ void File::moveCursor(Direction d){
 
 void File::addString(string s, Pos pos){
 	//TODO:
-	
+
 }
 
 void File::addLines(vector<string> newLines, size_t lineNumber){
@@ -195,56 +197,83 @@ void File::parseAttributes(){
 	indicatorPack.wordIndicators.clear();
 
 	// Parse range attributes
-	for(auto it = syntaxHighlighter->rangeAttributes.begin(); it != syntaxHighlighter->rangeAttributes.end(); ++it){
+	size_t linePos = 0;
+	int lookingForEnd = -1;
 
-		size_t linePos = 0;
-		bool lookingForStart = true;
-		RangeIndicator rangeIndicator;
+	std::vector<std::pair<Pos, int> > rangeIndicators;
 
-		for(auto line = lineBegin(); line != lineEnd(); ++line){
+	//make pairs of switchpoints with syntax numbers
+	for(auto line = lineBegin(); line != lineEnd(); ++line){
+	size_t linePos = 0;
 
-			while(linePos <= (*line).size()){
-				if(lookingForStart){
+		while(linePos < (*line).size()){
+			if(lookingForEnd == -1){
+				//Looking for a range start, pick the first one it encounters
+				size_t closestStart = (*line).size();
+				std::cout << closestStart << std::endl;
+				size_t startIndicatorSize = 0;
+
+				for(auto it = syntaxHighlighter->rangeAttributes.begin(); it != syntaxHighlighter->rangeAttributes.end(); ++it){
+					//For each range attribute
 					size_t lpos = (*line).find((*it).getStartIndicator(), linePos);
-					if(lpos == string::npos) break;
-					else{
-						linePos+=lpos;
-						lookingForStart = false;
-						rangeIndicator.ranges.push_back(Pos(lpos, line.getLineNumber()));
-					}
-				}
-				else{ // Looking for end
-					size_t lpos = (*line).find((*it).getEndIndicator(), linePos);
-					if(lpos == string::npos) break;
-					else{
-						linePos+=lpos;
-						lookingForStart = true;
-						rangeIndicator.ranges.push_back(Pos(lpos + (*it).getEndIndicator().size(), line.getLineNumber()));
+					if(!(lpos == string::npos) && lpos < closestStart){
+						lookingForEnd = it->getSyntax();
+						closestStart = lpos;
+						startIndicatorSize = it->getStartIndicator().size();
 					}
 				}
 
+				linePos += closestStart + startIndicatorSize;
+
+				//If start point was found, add range indicator
+				if(lookingForEnd != -1) rangeIndicators.push_back(std::pair<Pos, int>(Pos(linePos, line.getLineNumber()), lookingForEnd));
+			}
+			else{
+				// Looking for end
+				string endIndicator;//TODO move outside
+
+				// Get corresponding end indicator for the start indicator last found
+				auto it = syntaxHighlighter->rangeAttributes.begin();
+				for(; it != syntaxHighlighter->rangeAttributes.end(); ++it){
+					if(it->getSyntax() == lookingForEnd){
+						endIndicator = it->getEndIndicator();
+						break;
+					}
+				}
+
+				size_t lpos = (*line).find((*it).getEndIndicator(), linePos);
+				// If end indicator is not on line, break loop to continue looking on next line
+				if(lpos == string::npos) break;
+				else{
+					//incremenet line pos, save range indicator, and continue looking for a start indicator.
+					linePos+=lpos + endIndicator.size();
+					rangeIndicators.push_back(std::pair<Pos, int>(Pos(linePos + endIndicator.size(), line.getLineNumber()), lookingForEnd));
+					lookingForEnd = -1;
+				}
 			}
 		}
-
-		indicatorPack.rangeIndicators.push_back(rangeIndicator);
 	}
 
+	indicatorPack.rangeIndicators = rangeIndicators;
+
+//TODO runs
 	// Parse word attributes
 	for(auto it = syntaxHighlighter->wordAttributes.begin(); it != syntaxHighlighter->wordAttributes.end(); ++it){
-
 		//TODO add determine whitespace function?
 		WordIndicator wordIndicator;
 
-		for(auto word = wordBegin(); word != wordEnd(); ++word){
-			if((*it)->matches(word)) wordIndicator.words.push_back(word.getPos());
+		for(auto word = wordBegin(); word != wordEnd(); ++word){ //TODO segfaults in for params
+			if((*it)->matches(word)) wordIndicator.words.push_back(std::pair<Pos,  int>(word.getPos(), (*word).size()));
 		}
-
 		indicatorPack.wordIndicators.push_back(wordIndicator);
 	}
 }
 
 void File::setSyntaxHighlighter(const SyntaxHighlighter *s){
 	syntaxHighlighter = s;
+	//TODO parse when set highlighter?
+	//parseAttributes();
+	//TODO Uncomment to enable syntaxhighlighting
 }
 
 }

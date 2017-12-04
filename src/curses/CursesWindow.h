@@ -34,9 +34,9 @@ class CursesWindow {
 		bool enableAttribute(int attr);
 		bool disableAttribute(int attr);
 		// Draw string current color and attributes set
-		bool drawString(std::string s, int x, int y);
+		bool drawString(std::string s, size_t x, size_t y);
 		// Draw string specified color and current attributes set
-		bool drawString(std::string s, int x, int y, int color_number);
+		bool drawString(std::string s, size_t x, size_t y, int color_number);
 
 
 	friend class CursesInstance;
