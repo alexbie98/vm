@@ -2,23 +2,19 @@
 #define C_COMMAND_H
 
 #include "state/command/Command.h"
-#include "action/MovementAction.h"
-#include "action/DeleteAction.h"
 
 namespace vm {
 
+class Action;
+
 class CCommand : public Command {
 
-	private:
-		std::unique_ptr<MovementAction> movement;
 	public:
-		CCommand(): Command{'c'} {}
-		std::unique_ptr<Action> getAction(int key) override {
-			
-
-		}		
-		~AtCommand() override {}
-}
+		CCommand();
+		std::unique_ptr<Action> getAction(int key, 
+				std::unordered_map<int, std::unique_ptr<Command>>* const map) override;
+		~CCommand() override;
+};
 
 }
 

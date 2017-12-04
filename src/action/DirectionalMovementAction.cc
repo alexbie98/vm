@@ -11,12 +11,11 @@ void DirectionalMovementAction::doAction(State& context){
 
 DirectionalMovementAction::DirectionalMovementAction(Direction d,
 		size_t multi, unique_ptr<Action> nextAction):
-	MovementAction{multi, move(nextAction)}, d{d} {}
+	Action{multi, move(nextAction)}, d{d} {}
 		
 unique_ptr<Action> DirectionalMovementAction::clone(){
 	unique_ptr<Action> nextClone;
 	if (nextAction) nextClone = nextAction->clone();
-	
 	return make_unique<DirectionalMovementAction>(d, multi, 
 			move(nextClone));
 }

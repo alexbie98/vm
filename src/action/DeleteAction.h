@@ -13,7 +13,7 @@ class DeleteAction : public MovementModifiableAction {
 		void performOp(State& context, Pos start, Pos end) override;
 
 	public:
-		DeleteAction(std::unique_ptr<MovementAction> movement
+		DeleteAction(std::unique_ptr<Action> movement
 			 	= std::make_unique<DirectionalMovementAction>(LEFT),
 				size_t multi = 1, 
 				std::unique_ptr<Action> nextAction = std::unique_ptr<Action>{});

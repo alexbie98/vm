@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string>
-#include <map>
+#include <unordered_map>
 #include "controller/InputParser.h"
 
 namespace  vm {
@@ -17,7 +17,7 @@ class CommandModeInputParser : public InputParser{
 		size_t numBuffer;
 		size_t multiplier;
 		
-		std::map<int,std::unique_ptr<Command>> commandMap;
+		std::unordered_map<int,std::unique_ptr<Command>> commandMap;
 		std::unique_ptr<Command> current;
 		
 		void addEntries();

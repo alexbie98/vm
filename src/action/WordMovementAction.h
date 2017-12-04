@@ -1,11 +1,11 @@
 #ifndef WORD_MOVEMENT_ACTION_H
 #define WORD_MOVEMENT_ACTION_H
 
-#include "action/MovementAction.h"
+#include "action/Action.h"
 
 namespace vm {
 
-class WordMovementAction : public MovementAction{
+class WordMovementAction : public Action{
 
 	private:
 		void doAction(State& context) override;

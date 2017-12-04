@@ -22,7 +22,7 @@ void WordMovementAction::doAction(State& context){
 
 WordMovementAction::WordMovementAction(size_t multi, 
 		unique_ptr<Action> nextAction):
-	MovementAction{multi, move(nextAction)} {}
+	Action{multi, move(nextAction)} {}
 		
 unique_ptr<Action> WordMovementAction::clone(){
 	unique_ptr<Action> nextClone;

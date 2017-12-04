@@ -12,8 +12,8 @@ class CopyAction : public MovementModifiableAction {
 		void performOp(State& context, Pos start, Pos end) override;
 
 	public:
-		CopyAction(std::unique_ptr<MovementAction> movement
-			 	= std::unique_ptr<MovementAction>{},
+		CopyAction(std::unique_ptr<Action> movement
+			 	= std::unique_ptr<Action>{},
 				size_t multi = 1, 
 				std::unique_ptr<Action> nextAction = std::unique_ptr<Action>{});
 

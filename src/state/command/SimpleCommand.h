@@ -10,25 +10,18 @@ class SimpleCommand : Command {
 		std::unique_ptr<Action> a;
 
 	public:
-		SimpleCommand(int name, std::unique_ptr<Action> a): 
-			Command{name}, a{std::move(a)} {}
+		SimpleCommand(int name, bool isMovementCommand, std::unique_ptr<Action> a): 
+			Command{name, isMovementCommand}, a{std::move(a)} {}
 
-		std::unique_ptr<Action> getAction(int key = 0) override {
-			return std::move(a);
+		std::unique_ptr<Action> getAction(int key = 0,
+				std::unordered_map<int,std::unique_ptr<Command>>* const map
+				= nullptr)  override {
+			return a->clone();
 		}
 		~SimpleCommand() override{}
 };
 
 }
-
-
-
-
-
-
-
-
-
 
 
 #endif

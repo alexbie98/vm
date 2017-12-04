@@ -5,17 +5,17 @@
 
 namespace vm {
 
+class MovementAction;
+class Action;
+
 class DCommand : public Command {
 
-	private:
-		int macroKey;
 	public:
-		AtCommand(int macroKey) macroKey{macroKey} {}
-		std::unique_ptr<Action> getAction(int key) override {
-			return unique_ptr<Action>{};
-		}		
-		~AtCommand() override {}
-}
+		DCommand();
+		std::unique_ptr<Action> getAction(int key, 
+				std::unordered_map<int, std::unique_ptr<Command>>* const map) override;
+		~DCommand() override;
+};
 
 }
 

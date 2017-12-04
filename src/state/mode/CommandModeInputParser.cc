@@ -1,6 +1,12 @@
 #include "state/mode/CommandModeInputParser.h"
+
 #include "state/command/Command.h"
 #include "state/command/SimpleCommand.h"
+#include "state/command/AtCommand.h"
+#include "state/command/DCommand.h"
+#include "state/command/CCommand.h"
+
+
 #include "controller/KeyInput.h"
 #include "action/Action.h"
 
@@ -12,6 +18,7 @@ void CommandModeInputParser::reset(){
 	numBuffer = 0;
 	multiplier = 1;
 	current  = nullptr;
+
 }		
 
 void CommandModeInputParser::addEntries(){
