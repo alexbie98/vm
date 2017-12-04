@@ -62,6 +62,7 @@ class CommandModeInputParser : public InputParser{
 		std::unique_ptr<SimpleCommand> dot;
 		std::unique_ptr<SimpleCommand> semi;
 		std::unique_ptr<SimpleCommand> slash;
+		std::unique_ptr<SimpleCommand> colon;
 		std::unique_ptr<SimpleCommand> question;
 		std::unique_ptr<SimpleCommand> percent;
 		std::unique_ptr<AtCommand> at;

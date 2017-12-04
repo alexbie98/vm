@@ -5,6 +5,8 @@
 
 namespace vm {
 
+class TerminalModeInputParser;
+
 class TerminalMode : public Mode {
 
 	public:
@@ -14,6 +16,9 @@ class TerminalMode : public Mode {
 		void onEnter() override;
 		void onExit() override;
 		void reset() override;
+
+		TerminalModeInputParser* getTerminalParser();
+
 };
 
 }

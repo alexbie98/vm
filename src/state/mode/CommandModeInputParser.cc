@@ -10,7 +10,12 @@
 #include "action/DirectionalMovementAction.h"
 #include "action/ChangeModeAction.h"
 #include "action/DeleteAction.h"
+#include "action/WordMovementAction.h"
+
+
 #include "state/mode/InsertMode.h"
+#include "state/mode/TerminalMode.h"
+#include "state/mode/ReplaceMode.h"
 #include <utility>
 #include "data/Direction.h"
 
@@ -28,7 +33,7 @@ void CommandModeInputParser::reset(){
 void CommandModeInputParser::addEntries(){
 	
 	a = make_unique<SimpleCommand>('a',false, 
-		 make_unique<ChangeModeAction>(typeid(InsertMode),
+		 make_unique<ChangeModeAction>(typeid(InsertMode),0,
 		    make_unique<DirectionalMovementAction>(RIGHT)));
 
 	c = make_unique<CCommand>();
@@ -52,6 +57,18 @@ void CommandModeInputParser::addEntries(){
 	l = make_unique<SimpleCommand>('l', true,
 		make_unique<DirectionalMovementAction>(RIGHT));
 	
+	w = make_unique<SimpleCommand>('w', true,
+		make_unique<WordMovementAction>());
+	
+	slash = make_unique<SimpleCommand>('/', false,
+		make_unique<ChangeModeAction>(typeid(TerminalMode),'/'));
+	
+	question = make_unique<SimpleCommand>('?', false,
+		make_unique<ChangeModeAction>(typeid(TerminalMode),'?'));
+	
+	colon = make_unique<SimpleCommand>(':', false,
+		make_unique<ChangeModeAction>(typeid(TerminalMode),':'));
+
 	commandMap['a'] = a.get();
 	commandMap['c'] = c.get();
 	commandMap['d'] = d.get();
@@ -60,7 +77,9 @@ void CommandModeInputParser::addEntries(){
 	commandMap['j'] = j.get();
 	commandMap['k'] = k.get();
 	commandMap['l'] = l.get();
-
+	commandMap['/'] = slash.get();
+	commandMap['?'] = question.get();
+	commandMap[':'] = colon.get();
 
 }
 

@@ -7,8 +7,19 @@ namespace vm {
 TerminalMode::TerminalMode(): 
 	Mode{make_unique<TerminalModeInputParser>(),"TERMINAL"} {} 
 
+TerminalModeInputParser* TerminalMode::getTerminalParser(){
+	return dynamic_cast<TerminalModeInputParser*>(getParser());
+}
+
 TerminalMode::~TerminalMode(){}
 void TerminalMode::onEnter(){}
-void TerminalMode::onExit(){}
-void TerminalMode::reset() {}
+void TerminalMode::onExit(){
+	reset();
+}
+
+void TerminalMode::reset(){
+	getTerminalParser()->reset();
+}
+
+
 }

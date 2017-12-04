@@ -18,8 +18,8 @@ class Mode {
 		std::string name;
 	protected:
 		Mode(std::unique_ptr<InputParser> parser, const std::string& name);
-		InputParser* getParser();
 	public:
+		InputParser* getParser();
 		virtual ~Mode();
 		
 		std::string getName();

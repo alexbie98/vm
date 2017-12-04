@@ -12,9 +12,9 @@ class ChangeModeAction : public Action {
 	private:
 		void doAction(State& context) override;
 		const std::type_info& nextMode;
-
+		char in;
 	public:
-		ChangeModeAction(const std::type_info& nextMode,
+		ChangeModeAction(const std::type_info& nextMode, char in = 0,
 				std::unique_ptr<Action> nextAction = std::unique_ptr<Action>{});
 		~ChangeModeAction() override;
 		std::unique_ptr<Action> clone() override;

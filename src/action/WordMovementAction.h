@@ -9,6 +9,7 @@ class WordMovementAction : public Action{
 
 	private:
 		void doAction(State& context) override;
+		int getType(char c);
 
 	public:
 		WordMovementAction(size_t multi = 1, 
