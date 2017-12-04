@@ -18,7 +18,6 @@ class YCommand;
 class CommandModeInputParser : public InputParser{
 
 	private:
-		size_t decimal;
 		size_t numBuffer;
 		size_t multiplier;
 		

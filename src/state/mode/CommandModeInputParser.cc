@@ -1,11 +1,9 @@
 #include "state/mode/CommandModeInputParser.h"
-
 #include "state/command/Command.h"
 #include "state/command/SimpleCommand.h"
 #include "state/command/AtCommand.h"
 #include "state/command/DCommand.h"
 #include "state/command/CCommand.h"
-
 
 #include "controller/KeyInput.h"
 #include "action/Action.h"
@@ -16,11 +14,11 @@
 #include <utility>
 #include "data/Direction.h"
 
+#include <iostream>
 using namespace std;
 namespace vm {
 
 void CommandModeInputParser::reset(){
-	decimal = 1;
 	numBuffer = 0;
 	multiplier = 1;
 	current = nullptr;
@@ -66,7 +64,7 @@ void CommandModeInputParser::addEntries(){
 
 }
 
-CommandModeInputParser::CommandModeInputParser(): decimal{1}, numBuffer{0},
+CommandModeInputParser::CommandModeInputParser(): numBuffer{0},
 	multiplier{1}, current{nullptr} {
 	addEntries();
 }
@@ -75,10 +73,10 @@ CommandModeInputParser::CommandModeInputParser(): decimal{1}, numBuffer{0},
 unique_ptr<Action> CommandModeInputParser::parseInput(KeyInput* in){
 	int key = in->getKey();
 	
+	cout << numBuffer<< endl;
 	if (current == nullptr) {
 		if (key >=48 && key<=57){
-			numBuffer = numBuffer*decimal + (key-48);
-			decimal++;
+			numBuffer = numBuffer*10 + (key-48);
 			return unique_ptr<Action>();
 		}
 		else if(commandMap.count(key)){
@@ -102,14 +100,14 @@ unique_ptr<Action> CommandModeInputParser::parseInput(KeyInput* in){
 	else {
 		if //(dynamic_cast<RCommand*>(current) ||
 				( dynamic_cast<AtCommand *>(current)){
+			multiplier*=(numBuffer ? numBuffer : 1);
 			Action * act = current->getAction(key, &commandMap).release();
 			act->setMultiplier(multiplier);
 			reset();
 			return unique_ptr<Action>{act};
 		}
 		else if (key >=48 && key<=57){
-			numBuffer = numBuffer*decimal + (key-48);
-			decimal++;
+			numBuffer = numBuffer*10 + (key-48);
 			return unique_ptr<Action>();
 		}
 		else {
