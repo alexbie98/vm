@@ -2,12 +2,14 @@
 #include "state/SyntaxHighlighter.h"
 #include <utility>
 #include <iostream>
+#include <algorithm>
+#include <util/Word.h>
 
 using namespace std;
 namespace vm {
 
 File::File(const string& name, vector<string> lines): name{name},
-	lines{lines}, cursorPos{Pos{}} {}
+	lines{lines}, cursorPos{Pos{1,1}} {}
 
 File::~File(){}
 
@@ -86,64 +88,86 @@ string File::getFileExtension() const{
 }
 
 string File::getString(Pos start, Pos end) const {
-	if(!isValidPos(start) || !isValidPos(end)) throw BadOperationErr{};
-	//TODO:
+
+	if (start.y == end.y){
+		return lines[start.y].substr(start.x, end.x-start.x);
+	}
+
+	vector<string> chunk{end.y-start.y+1};
+	copy(lines.begin()+start.y, lines.begin()+end.y+1, chunk.begin());
+	chunk[0] = chunk[0].substr(start.x,string::npos);
+	chunk[chunk.size()-1] = chunk[chunk.size()-1].substr(0,end.y);
+	
+	string s;
+	for (const string& line: chunk){
+		s+=(line + "\n");
+	}
+	return s;	
 }
 
 const std::vector<string>& File::getLines() const {
 	return lines;
-
 }
 
-bool File::isValidPos(Pos p) const {
-	return (p.y<lines.size() && p.x < lines[p.y].length());
-}
+void File::setCursorPos(Pos p){
+	cursorPos = p;
+}		
 
 Pos File::getCursorPos() const {
 		return cursorPos;
 }
 
 Pos File::toScreenCoords(Pos lineCoords) const{
-	return Pos{};
-	//TODO:
+	Pos screenCoords; if(lineCoords.x != string::npos){
+		string s = lines[lineCoords.y].substr(0, lineCoords.x);
+		size_t tabs = count(s.begin(),s.end(), '\t');
+		screenCoords.x = tabs*(utils::tabSize-1)+s.length();
+	}
+	screenCoords.y = lineCoords.y+1;
+	return screenCoords;
 }
 
 Pos File::toLineCoords(Pos screenCoords) const{
-	return Pos{};
-	//TODO:
+	Pos lineCoords;
+	lineCoords.y = screenCoords.y-1;
+	for (size_t sum = 0;lineCoords.x <lines[lineCoords.y].size() &&
+			sum<screenCoords.x; lineCoords.x++){
+		sum+=utils::getCharWidth(lines[lineCoords.y][lineCoords.x]);
+	}
+	lineCoords.x--;
+	return lineCoords;
 }
 
-void File::setCursorPos(Pos p){
-	if (!isValidPos(p)) throw BadOperationErr{};
-	cursorPos = p;
-}
 
 void File::moveCursor(Direction d){
 
-	Pos screen;
+	Pos line;
 	switch (d) {
 		case UP: {
-			if (cursorPos.y == 0) throw BadOperationErr{};
-			screen = toScreenCoords(cursorPos);
-			screen.y--;
-			setCursorPos(toLineCoords(screen));
+			if (cursorPos.y == 1) throw BadOperationErr{};
+			cursorPos.y--;
+			line = toLineCoords(cursorPos);
+			setCursorPos(toScreenCoords(toLineCoords(cursorPos)));
 			break;
 		}
 		case DOWN: {
-			if (cursorPos.y == lines.size()-1) throw BadOperationErr{};
-			Pos screen = toScreenCoords(cursorPos);
-			screen.y++;
-			setCursorPos(toLineCoords(screen));
+			if (cursorPos.y == lines.size()) throw BadOperationErr{};
+			cursorPos.y++;
+			setCursorPos(toScreenCoords(toLineCoords(cursorPos)));
 			break;
 		}
 		case LEFT: {
-			if (cursorPos.x == 0) throw BadOperationErr{};
-			cursorPos.x--;
+			line = toLineCoords(cursorPos);
+			if (line.x == string::npos || line.x == 0) throw BadOperationErr{};
+			line.x--;
+			setCursorPos(toScreenCoords(line));
 			break;
 		}
 		case RIGHT: {
-			if (cursorPos.x == lines[cursorPos.y].size()-1) throw BadOperationErr{};
-			cursorPos.x++;
+			line = toLineCoords(cursorPos);
+			if (line.x == lines[cursorPos.y].size()-1) throw BadOperationErr{};
+			line.x++;
+			setCursorPos(toScreenCoords(line));
 			break;
 		}
 	}
@@ -151,28 +175,55 @@ void File::moveCursor(Direction d){
 
 
 void File::addString(string s, Pos pos){
-	//TODO:
-
+	
+	while(!s.empty()){
+		size_t nextNewLine = s.find("\n");
+		if (nextNewLine == 0){
+			pos.y++;
+			lines.insert(lines.begin()+pos.y, string{});
+		}
+		else {
+			string add = lines[pos.y].insert(pos.x+1,s.substr(0,nextNewLine));
+			pos.x+=add.size();
+			s = s.substr(nextNewLine);
+		}
+	}		
 }
 
 void File::addLines(vector<string> newLines, size_t lineNumber){
-	//TODO:
+	lines.insert(lines.begin()+lineNumber+1,newLines.begin(), newLines.end());
 }
 
+// NO NEWLINES
 void File::replaceString(string s, Pos pos){
-	//TODO:
+	for (size_t i = pos.x;i<s.length();i++){
+		lines[pos.y][i] = s[i-pos.x];
+	}
 }
 
 void File::replaceLines(vector<string> newLines, size_t lineNumber){
-	//TODO:
+	for (size_t i = lineNumber;i<newLines.size();i++){
+		if (i<lines.size()){
+			lines[i] = newLines[i-lineNumber];
+		}
+		else{
+			lines.push_back(newLines[i-lineNumber]);
+		}
+	}	
 }
 
 void File::removeString(Pos start, Pos end){
-	//TODO:
+	if (end.y < start.y || (end.y == start.y && end.x < start.x)){
+		swap(start,end);
+	}
+	string before = lines[start.y].substr(0,start.x);
+	string after = lines[end.y].substr(end.x, string::npos);
+	lines[start.y] = before + after;
+	lines.erase(lines.begin()+start.y+1, lines.begin()+end.y+1);
 }
 
 void File::removeLines(size_t start, size_t end){
-	//TODO:
+	lines.erase(lines.begin()+start, lines.begin()+end+1);
 }
 
 // difference tracking ----------------------------------------------------

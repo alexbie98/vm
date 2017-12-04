@@ -6,7 +6,9 @@ using namespace std;
 namespace vm {
 	
 void DeleteAction::performOp(State& context, Pos start, Pos end){
-	context.getFile().removeString(start, end);
+	File& f = context.getFile();
+	f.removeString(start, end);
+	f.setCursorPos(f.toScreenCoords(start));
 }
 
 DeleteAction::DeleteAction(unique_ptr<Action> movement, size_t multi,

@@ -12,9 +12,17 @@ MovementModifiableAction::MovementModifiableAction(
 	Action{multi, move(nextAction)}, movement{move(movement)} {}
 
 void MovementModifiableAction::doAction(State& context){
-	Pos start = context.getFile().getCursorPos();
+
+	File& f = context.getFile();
+
+	Pos start = f.toLineCoords(f.getCursorPos());
 	if (movement) movement->execute(context);
-	Pos end = context.getFile().getCursorPos();
+	Pos end = f.toLineCoords(f.getCursorPos());
+
+	if (end.y < start.y || (end.y == start.y && end.x < start.x)){
+		swap(start,end);
+  }
+
 	performOp(context, start, end);
 }
 

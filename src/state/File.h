@@ -70,12 +70,12 @@ class File{
 		const std::vector<std::string>& getLines() const;
 		std::string getString(Pos start, Pos end) const;
 		Pos getCursorPos() const;
+		void setCursorPos(Pos p);
+
 
 		// cursor utility functions
 		Pos toScreenCoords(Pos lineCoords) const;
 		Pos toLineCoords(Pos screenCoords) const;
-		bool isValidPos(Pos p) const;
-		void setCursorPos(Pos p);
 		void moveCursor(Direction d);
 
 		void setName(std::string name);
