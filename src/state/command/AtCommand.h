@@ -10,8 +10,7 @@ class AtCommand : public Command {
 	public:
 		AtCommand();
 		std::unique_ptr<Action> getAction(int key, 
-				std::unordered_map<int,std::unique_ptr<Command>>* const map 
-				= nullptr) override;
+				std::map<int,Command*>* const map = nullptr) override;
 
 		~AtCommand() override;
 };

@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "action/Action.h"
-#include <unordered_map>
+#include <map>
 
 namespace vm {
 
@@ -16,8 +16,7 @@ class Command{
 		Command(int name, bool isMovementCommand=false): name{name},
 			isMovementCommand{isMovementCommand} {}
 		virtual std::unique_ptr<Action> getAction(int key = 0, 
-				std::unordered_map<int,std::unique_ptr<Command>>* const map =
-				nullptr) = 0;
+				std::map<int,Command*>* const map = nullptr) = 0;
 		bool isMovement() { return isMovementCommand; }
 		bool operator==(const Command& other){ return name == other.name; }
 		virtual ~Command() {}

@@ -4,7 +4,7 @@
 #include "state/command/Command.h"
 
 namespace vm {
-class SimpleCommand : Command {
+	class SimpleCommand : public Command {
 
 	private:
 		std::unique_ptr<Action> a;
@@ -14,8 +14,7 @@ class SimpleCommand : Command {
 			Command{name, isMovementCommand}, a{std::move(a)} {}
 
 		std::unique_ptr<Action> getAction(int key = 0,
-				std::unordered_map<int,std::unique_ptr<Command>>* const map
-				= nullptr)  override {
+				std::map<int,Command*>* const map = nullptr)  override {
 			return a->clone();
 		}
 		~SimpleCommand() override{}
