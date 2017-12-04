@@ -33,7 +33,7 @@ namespace vm {
 
 		widget = std::make_unique<StatusBar>(
 							std::make_unique<FileText>(syntaxColorMap,
-								std::make_unique<Window>(std::move(cursesWindow))));
+								std::make_unique<Window>(cInst, std::move(cursesWindow))));
 
 		//TODO Make constants
 	}

@@ -41,7 +41,7 @@ void StatusBar::draw(const State &state){
     drawLineNumber(state, windowWidth, windowHeight);
   }
   else if(dynamic_cast<const TerminalMode*>(activeMode) != nullptr){
-    std::string currentCommand = dynamic_cast<const TerminalMode*>(activeMode)->getCommandBuffer();
+    std::string currentCommand = ":" + dynamic_cast<const TerminalMode*>(activeMode)->getCommandBuffer();
     size_t commandHightWithWrap = currentCommand.size()/windowWidth + 1;
     //TODO is window width ever 0?
 

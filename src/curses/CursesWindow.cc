@@ -33,6 +33,10 @@ Pos CursesWindow::getAbsolutePos(){
 	return pos;
 }
 
+bool CursesWindow::resize(size_t lines, size_t cols){
+	wresize(rawWin, lines, cols) == OK;
+}
+
 bool CursesWindow::setPos(Pos p){//return bool or int?
 	return mvwin(rawWin, p.y, p.x) == OK;
 }
@@ -42,13 +46,17 @@ bool CursesWindow::setPos(size_t x, size_t y){
 }
 
 bool CursesWindow::setCursorPos(Pos p){
-	wmove(rawWin, p.y, p.x);
+	return wmove(rawWin, p.y, p.x) == OK;
 }
 
 Pos CursesWindow::getCursorPos(){
 	Pos p;
 	getyx(rawWin, p.y, p.x);
 	return p;
+}
+
+bool CursesWindow::clear(){
+	return wclear(rawWin) == OK;
 }
 
 bool CursesWindow::refresh(){

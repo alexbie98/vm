@@ -26,10 +26,12 @@ class CursesWindow {
 		//Absolute screen coords of windows origin
 		Pos getAbsolutePos();
 		//Do not use to move subwindow
+		bool resize(size_t lines, size_t cols);
 		bool setPos(Pos p);
 		bool setPos(size_t x, size_t y);
 		bool setCursorPos(Pos p);
 		Pos getCursorPos();
+		bool clear();
 		bool refresh();
 		bool setDrawColor(int color_number);
 		int getDrawColor();

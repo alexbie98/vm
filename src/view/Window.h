@@ -11,12 +11,16 @@ class State;
 namespace vm{
 
 class Window: public Widget{ //rename widgets?  WindowWidget?
+  const curses::CursesInstance &cInst;
   std::unique_ptr<curses::CursesWindow> cursesWindow; // unique_ptr?
 public: // cwindow cpy ctor
-  Window(std::unique_ptr<curses::CursesWindow> cursesWindow):
-    Widget{*cursesWindow}, cursesWindow{std::move(cursesWindow)}{}
+  Window(const curses::CursesInstance &cinst, std::unique_ptr<curses::CursesWindow> cursesWindow):
+    cInst{cInst}, Widget{*cursesWindow}, cursesWindow{std::move(cursesWindow)}{}
 
-  void draw(const State& state){};
+  void draw(const State& state){
+    win.clear();
+    win.resize(cInst.getScreenHeight(), cInst.getScreenWidth());
+  }
 };
 
 }
