@@ -5,7 +5,7 @@ using namespace std;
 namespace vm {
 
 CommandMode::CommandMode(): 
-	Mode{make_unique<CommandModeInputParser>(), "COMMAND"} {}
+	Mode{make_unique<CommandModeInputParser>(), ""} {}
 
 CommandMode::~CommandMode(){}
 
