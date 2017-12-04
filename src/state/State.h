@@ -82,6 +82,7 @@ class State: public Subject<State,Event>{
 		const File& getFile() const;
 
 		void setActiveMode(const std::type_info& nextMode);
+		const Mode *getMode() const;
 		Mode& getMode();
 
 		Register& getRegister();

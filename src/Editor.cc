@@ -1,12 +1,13 @@
 #include "Editor.h"
+#include <iostream>
 
 using namespace std;
 namespace vm {
 
 Editor::Editor(const vector<string>& args):
   state{new State()},
-  controller{new CursesController(cursesInstance)},
-  view{new CursesView(cursesInstance)}{
+  view{new CursesView(cursesInstance)},
+  controller{new CursesController(cursesInstance)}{
    state->addObserver(view.get());
 
 	// add files to the state

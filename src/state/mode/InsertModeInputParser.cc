@@ -17,12 +17,12 @@ InsertModeInputParser::InsertModeInputParser() {}
 
 unique_ptr<Action> InsertModeInputParser::parseInput(KeyInput* in){
 	int key = in->getKey();
-	
-	cout << key << endl;
+
+	//cout << key << endl;
 	switch (key){
 		// ASCII 27 = esc key
 		case 27: return make_unique<ChangeModeAction>(typeid(CommandMode));
-		
+
 		case KEY_UP: return make_unique<DirectionalMovementAction>(UP);
 		case KEY_DOWN: return make_unique<DirectionalMovementAction>(DOWN);
 		case KEY_LEFT: return make_unique<DirectionalMovementAction>(LEFT);
@@ -41,4 +41,3 @@ unique_ptr<Action> InsertModeInputParser::parseInput(KeyInput* in){
 InsertModeInputParser::~InsertModeInputParser(){}
 
 }
-

@@ -3,18 +3,32 @@
 #include "state/File.h"
 #include <iostream>
 #include <map>
+#include "util/Word.h"
 
 namespace vm{
 
 //fix line wrapping to work with tabs
-size_t FileText::drawLineWithWrap(const std::string &s, size_t y){
+size_t FileText::drawLineWithWrap(const std::string &s, size_t y, const State &state){
   size_t windowWidth = win.getWidth();
-  size_t posInString = 0;
+  size_t linesAdded = 1;
+  size_t widthAdded = 0;
+  size_t x = 0;
 
-  while(posInString <= s.size()){
-    win.drawString(s.substr(posInString, posInString+windowWidth), 0, y++);
-    posInString+=windowWidth;
+  Pos fileCursorPos((state.getFile().getCursorPos().x == std::string::npos)? 0:state.getFile().getCursorPos().x,
+                    (state.getFile().getCursorPos().y == std::string::npos)? 0:state.getFile().getCursorPos().y);
+
+  for(char c: s){
+    if(widthAdded + utils::getCharWidth(c) > windowWidth){
+      y++;
+      widthAdded = 0;
+      linesAdded++;
+    }
+    win.drawString(std::string(1, c), widthAdded, y);
+    widthAdded+=utils::getCharWidth(c);
+    if(currentLine + y == fileCursorPos.y && x == fileCursorPos.x) screenCursorPos = Pos(x,y);
+    x++;
   }
+  return linesAdded;
 }
 
 // it should be at the first range indicator for its line
@@ -66,9 +80,16 @@ void FileText::draw(const State &state){
   for(auto it = state.getFile().MakeLineIterator(currentLine);
       it != state.getFile().lineEnd() && drawLine <= win.getHeight();
       ++it){
+
     if((*it).size() == 0) drawLine++;
-    else drawLine+=drawLineWithWrap(*it, drawLine++);
+    else drawLine+=drawLineWithWrap(*it, drawLine,state);
   }
+
+  win.setDrawColor(5);
+  while(drawLine <= win.getHeight()) win.drawString(std::string(1, '~'), 0, drawLine++);
+  win.setDrawColor(1);
+
+  win.setCursorPos(screenCursorPos);
 
   /*
   //Draw word highlights over default based on precedence

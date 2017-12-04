@@ -26,7 +26,7 @@ const int State::SAFE_EXIT = 0;
 const int State::ERROR_EXIT = 2;
 
 State::State(): runStatus{RUNNING}, commandMode{new CommandMode()},
-	insertMode{new InsertMode()}, replaceMode{new ReplaceMode()}, 
+	insertMode{new InsertMode()}, replaceMode{new ReplaceMode()},
 	terminalMode{new TerminalMode()}, buildingMacro{false} {
 		//Init highlighter extension map
 		initExtHighlighters();
@@ -88,7 +88,7 @@ int State::getRunStatus() const{
 void State::handleInput(unique_ptr<Input> input){
 	std::unique_ptr<Action> action = activeMode->parseInput(input.get());
 	if (action){
-		cout << "action triggered!" << endl;
+		//cout << "action triggered!" << endl;
 		try {
 			action->execute(*this);
 		} catch(...){}
@@ -115,6 +115,10 @@ void State::setActiveMode(const type_info& nextMode){
 	else throw;
 
 	activeMode->onEnter();
+}
+
+const Mode *State::getMode() const{
+	return activeMode;
 }
 
 Mode& State::getMode(){

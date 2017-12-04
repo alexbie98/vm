@@ -14,6 +14,7 @@ class TerminalMode : public Mode {
 		void onEnter() override;
 		void onExit() override;
 		void reset() override;
+		const std::string& getCommandBuffer()const;
 };
 
 }

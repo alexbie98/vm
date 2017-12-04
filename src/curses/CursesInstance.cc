@@ -1,5 +1,7 @@
 #include "CursesInstance.h"
 #include <iostream>
+#include "util/Word.h"
+
 using namespace std;
 
 namespace curses {
@@ -12,8 +14,10 @@ CursesInstance::CursesInstance(){
 	getmaxyx(stdscr, height, width);
 
 	//input init
+	set_tabsize(utils::TabSize);
 	set_escdelay(1);
 	keypad(stdscr,TRUE);
+	refresh();
 	noecho();
 	cbreak();
 }

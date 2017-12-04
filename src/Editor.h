@@ -14,8 +14,8 @@ class Editor {
 	private:
 		curses::CursesInstance cursesInstance;
 		std::unique_ptr<State> state;
-		std::unique_ptr<Controller> controller;
 		std::unique_ptr<View> view;
+		std::unique_ptr<Controller> controller;
 
 	public:
 		Editor(const std::vector<std::string>& args);

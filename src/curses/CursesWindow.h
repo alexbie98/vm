@@ -28,6 +28,8 @@ class CursesWindow {
 		//Do not use to move subwindow
 		bool setPos(Pos p);
 		bool setPos(size_t x, size_t y);
+		bool setCursorPos(Pos p);
+		Pos getCursorPos();
 		bool refresh();
 		bool setDrawColor(int color_number);
 		int getDrawColor();

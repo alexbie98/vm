@@ -1,5 +1,6 @@
 #include "view/CursesView.h"
 #include "view/FileText.h"
+#include "view/StatusBar.h"
 #include "view/Window.h"
 #include "curses/CursesConstants.h"
 #include "state/SyntaxConstants.h"
@@ -13,9 +14,11 @@ namespace vm {
 		//make default mode
 
 		// Initialize color pallet
+		cInst.initColorPair(1, curses::color::Default, curses::color::Default);
 		cInst.initColorPair(2, curses::color::Yellow, curses::color::Default);
 		cInst.initColorPair(3, curses::color::Green, curses::color::Default);
 		cInst.initColorPair(4, curses::color::Blue, curses::color::Default);
+		cInst.initColorPair(5, curses::color::Cyan, curses::color::Default);
 
 		// Create map of syntax identifiers to colors
 		std::unordered_map<int, int> syntaxColorMap ({{syntax::DoubleQuote,2},
@@ -27,7 +30,10 @@ namespace vm {
 			cInst.makeCursesWindow(Pos{0,0},
 														 cInst.getScreenWidth(),
 														 cInst.getScreenHeight());
-		widget = std::make_unique<FileText>(syntaxColorMap, std::make_unique<Window>(std::move(cursesWindow)));
+
+		widget = std::make_unique<StatusBar>(
+							std::make_unique<FileText>(syntaxColorMap,
+								std::make_unique<Window>(std::move(cursesWindow))));
 
 		//TODO Make constants
 	}

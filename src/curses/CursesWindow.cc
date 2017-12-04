@@ -41,6 +41,16 @@ bool CursesWindow::setPos(size_t x, size_t y){
 	return mvwin(rawWin, y, x) == OK;
 }
 
+bool CursesWindow::setCursorPos(Pos p){
+	wmove(rawWin, p.y, p.x);
+}
+
+Pos CursesWindow::getCursorPos(){
+	Pos p;
+	getyx(rawWin, p.y, p.x);
+	return p;
+}
+
 bool CursesWindow::refresh(){
 	return wrefresh(rawWin) == OK;
 }
