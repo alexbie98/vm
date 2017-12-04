@@ -75,12 +75,21 @@ size_t FileText::drawLineWithWrap(const std::string &s, size_t y, std::vector<st
 void FileText::draw(const State &state){
   widget->draw(state);
 
+  //Change currentLine if file cursor is outside window;
+  if(state.getFile().getCursorPos().y > currentLine + win.getHeight()){
+    currentLine += state.getFile().getCursorPos().y - win.getHeight();
+  }
+  if(state.getFile().getCursorPos().y < currentLine){
+    //Subtract difference
+    currentLine += state.getFile().getCursorPos().y - currentLine;
+  }
+
+
   //Draw all text in default colors first.
   size_t drawLine = 0;
   for(auto it = state.getFile().MakeLineIterator(currentLine);
       it != state.getFile().lineEnd() && drawLine <= win.getHeight();
       ++it){
-
     if((*it).size() == 0) drawLine++;
     else drawLine+=drawLineWithWrap(*it, drawLine,state);
   }
@@ -126,21 +135,21 @@ void FileText::draw(const State &state){
 
   //Draw range highlights on top
 
-  // //First range at or after currentLine
-  // auto currentRange = state.getFile().getIndicatorPack().rangeIndicators.begin();
-  // for(;
-  //     currentRange != state.getFile().getIndicatorPack().rangeIndicators.end() && currentRange->first.y < currentLine;
-  //     ++currentRange);
-  //
-  // drawLine = 0;
-  // int insideRange = -1;
-  //
-  // for(auto it = state.getFile().MakeLineIterator(currentLine);
-  //     it != state.getFile().lineEnd() && drawLine <= win.getHeight();
-  //     ++it){
-  //   if((*it).size() == 0) drawLine++;
-  //   else drawLine+=drawLineWithWrap(*it, drawLine++, currentRange, insideRange);
-  // } //*/
+  //First range at or after currentLine
+  auto currentRange = state.getFile().getIndicatorPack().rangeIndicators.begin();
+  for(;
+      currentRange != state.getFile().getIndicatorPack().rangeIndicators.end() && currentRange->first.y < currentLine;
+      ++currentRange);
+
+  drawLine = 0;
+  int insideRange = -1;
+
+  for(auto it = state.getFile().MakeLineIterator(currentLine);
+      it != state.getFile().lineEnd() && drawLine <= win.getHeight();
+      ++it){
+    if((*it).size() == 0) drawLine++;
+    else drawLine+=drawLineWithWrap(*it, drawLine++, currentRange, insideRange);
+  } //*/
 
 }
 

@@ -7,7 +7,11 @@ using namespace std;
 namespace vm {
 
 File::File(const string& name, vector<string> lines): name{name},
-	lines{lines}, cursorPos{Pos{}} {}
+	lines{lines}, cursorPos{Pos{}} {
+		if(lines.size() == 0){
+			this->lines.push_back("");
+		}
+	}
 
 File::~File(){}
 

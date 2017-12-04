@@ -12,6 +12,7 @@ namespace vm{
 class FileText: public WidgetDecorator{
   size_t currentLine;
   Pos screenCursorPos;
+
   //syntax, color
   const std::unordered_map<int, int> &syntaxColorMap;
 
