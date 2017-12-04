@@ -9,7 +9,6 @@ namespace vm {
 void PasteAction::doAction(State& context) {
 	File& f = context.getFile();
 	f.addString(context.getRegister().paste, f.getCursorPos());
-	getMultiplier();
 }
 
 PasteAction::PasteAction(size_t multi, std::unique_ptr<Action> nextAction):

@@ -1,5 +1,5 @@
 #include "state/mode/InsertMode.h"
-#include "InsertModeInputParser.h"
+#include "state/mode/InsertModeInputParser.h"
 
 using namespace std;
 namespace vm {

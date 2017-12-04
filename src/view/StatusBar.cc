@@ -8,6 +8,7 @@
 #include "state/mode/ReplaceMode.h"
 #include "state/mode/TerminalMode.h"
 #include "state/mode/CommandMode.h"
+#include "state/mode/TerminalModeInputParser.h"
 
 namespace vm{
 
@@ -41,7 +42,7 @@ void StatusBar::draw(const State &state){
     drawLineNumber(state, windowWidth, windowHeight);
   }
   else if(dynamic_cast<const TerminalMode*>(activeMode) != nullptr){
-    std::string currentCommand = ":" + dynamic_cast<const TerminalMode*>(activeMode)->getCommandBuffer();
+    std::string currentCommand = ":" + dynamic_cast<const TerminalMode*>(activeMode)->getTerminalParser()->getCommandBuffer();
     size_t commandHightWithWrap = currentCommand.size()/windowWidth + 1;
     //TODO is window width ever 0?
 

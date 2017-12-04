@@ -10,9 +10,8 @@ namespace vm {
 CCommand::CCommand(): Command{'c'} {}
 
 unique_ptr<Action> CCommand::getAction(int key, 
-		unordered_map<int, unique_ptr<Command>>* const map) {
+		map<int, Command*>* const map) {
 	if (key == 'c'){
-		//TODO:
 	}
 	else if (map->at(key)->isMovement()){
 		return make_unique<DeleteAction>(map->at(key)->getAction(),

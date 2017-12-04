@@ -8,7 +8,7 @@ namespace vm {
 DCommand::DCommand(): Command{'d'} {}
 
 unique_ptr<Action> DCommand::getAction(int key, 
-		unordered_map<int, unique_ptr<Command>>* const map) {
+		map<int, Command*>* const map) {
 	if (key == 'd'){
 		//TODO:
 	}

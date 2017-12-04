@@ -5,6 +5,8 @@
 
 namespace vm {
 
+class TerminalModeInputParser;
+
 class TerminalMode : public Mode {
 
 	public:
@@ -14,7 +16,10 @@ class TerminalMode : public Mode {
 		void onEnter() override;
 		void onExit() override;
 		void reset() override;
-		const std::string& getCommandBuffer()const;
+
+		TerminalModeInputParser* getTerminalParser();
+		const TerminalModeInputParser* getTerminalParser()const;
+
 };
 
 }

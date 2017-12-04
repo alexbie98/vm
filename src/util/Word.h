@@ -3,6 +3,8 @@
 
 namespace utils{
 
+	static const int tabSize = 4;
+
   const int TabSize = 4;
 
   static inline bool isWhitespace(char c){

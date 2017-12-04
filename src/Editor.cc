@@ -1,5 +1,4 @@
 #include "Editor.h"
-#include <iostream>
 
 using namespace std;
 namespace vm {

@@ -88,7 +88,6 @@ int State::getRunStatus() const{
 void State::handleInput(unique_ptr<Input> input){
 	std::unique_ptr<Action> action = activeMode->parseInput(input.get());
 	if (action){
-		//cout << "action triggered!" << endl;
 		try {
 			action->execute(*this);
 		} catch(...){}
