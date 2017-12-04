@@ -28,9 +28,10 @@ const int State::ERROR_EXIT = 2;
 State::State(): runStatus{RUNNING}, commandMode{new CommandMode()},
 	insertMode{new InsertMode()}, replaceMode{new ReplaceMode()}, 
 	terminalMode{new TerminalMode()}, buildingMacro{false} {
+		//Init highlighter extension map
 		initExtHighlighters();
 		activeMode = insertMode.get();
-	}
+}
 
 State::~State(){}
 
@@ -39,17 +40,21 @@ void State::initExtHighlighters(){
 	unique_ptr<SyntaxHighlighter> cpp = make_unique<SyntaxHighlighter>();
 
 	// Add range and word attributes
-	cpp->rangeAttributes.push_back(RangeAttribute(syntax::DoubleQuotes, "\"", "\""));
+	cpp->rangeAttributes.push_back(RangeAttribute(syntax::DoubleQuote, "\"", "\""));
+	cpp->rangeAttributes.push_back(RangeAttribute(syntax::MultiLineComment, "/*", "*/"));
 
-	DictionaryAttribute keyword(1, syntax::Keyword);//TODO make precedence constants
-	for(const string &s: syntax::Keywords) keyword.addKey(s);
+	std::unique_ptr<DictionaryAttribute> keywordAttribute =
+		make_unique<DictionaryAttribute>(1, syntax::Keyword);//TODO make precedence constants
+	for(const string &s: syntax::Keywords) keywordAttribute->addKey(s);
+
+
+	cpp->wordAttributes.push_back(std::move(keywordAttribute)); //TODO FREEZES
+
+	extHighlighters["cc"] = cpp.get();
+	extHighlighters["h"] = cpp.get();
 
 	// Add Syntax highlighters to buffer
 	syntaxHighlighters.push_back(std::move(cpp));
-
-	// Correspond file extensions with respective syntax highlighters
-	extHighlighters[".cc"] = syntaxHighlighters[0].get();
-	extHighlighters[".h"] = syntaxHighlighters[0].get();
 }
 
 void State::addFile(const std::string& file){
@@ -61,8 +66,8 @@ void State::addFile(const std::string& file){
 
 	// Set files syntax highlighter if it has one for its extension
 	auto s = extHighlighters.find(files.back()->getFileExtension());
-	if(!(s == extHighlighters.end())) files.back()->setSyntaxHighlighter((*s).second);
-	else files.back()->setSyntaxHighlighter(nullptr);
+	if(s == extHighlighters.end()) files.back()->setSyntaxHighlighter(nullptr);
+	else files.back()->setSyntaxHighlighter((*s).second);
 
 	notifyAll(FILE_ADDED);
 }

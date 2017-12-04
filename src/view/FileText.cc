@@ -2,6 +2,8 @@
 #include "state/State.h"
 #include "state/File.h"
 #include <iostream>
+#include <map>
+
 namespace vm{
 
 //fix line wrapping to work with tabs
@@ -15,9 +17,51 @@ size_t FileText::drawLineWithWrap(const std::string &s, size_t y){
   }
 }
 
+// it should be at the first range indicator for its line
+size_t FileText::drawLineWithWrap(const std::string &s, size_t y, std::vector<std::pair<Pos, int> >::const_iterator &it, int &insideRange){
+  size_t windowWidth = win.getWidth();
+
+  auto temp = syntaxColorMap.find(it->second);
+  if(insideRange != -1 && temp != syntaxColorMap.end())
+    win.setDrawColor(temp->second);
+      //TODO syntax nubmers must be >=0
+
+  for(int i = 0; i < s.size(); i++){ //TODO fix tabs?
+    if(insideRange != -1) win.drawString(std::string(s[i], 1), i%windowWidth, y + i/windowWidth);
+    if(i == it->first.x){
+      ++it;
+      if(insideRange != -1) insideRange = -1;
+      else insideRange = it->second;
+
+
+      auto temp = syntaxColorMap.find(it->second);
+      if(insideRange != -1 && temp != syntaxColorMap.end())
+        win.setDrawColor(temp->second);
+    }
+  }
+
+  return y + s.size() % windowWidth;
+}//not inside, be negative, otherwise inside range is
+
+//set color beforehand
+size_t FileText::drawLineWithWrap(const std::string &s, size_t y, std::vector<std::pair<Pos, size_t> >::const_iterator &it){
+  size_t windowWidth = win.getWidth();
+  size_t wordSize = it->second;
+
+  for(int i = 0; i < s.size(); i++){
+    if(i = it->first.x){
+      for(int j = 0; j != it->second; j++) win.drawString(std::string(s[i], 1), i%windowWidth, y + i/windowWidth);
+      ++it;
+    }
+  }//TODO CHECK
+
+  return y + s.size() % windowWidth;
+}
+
 void FileText::draw(const State &state){
   widget->draw(state);
 
+  //Draw all text in default colors first.
   size_t drawLine = 0;
   for(auto it = state.getFile().MakeLineIterator(currentLine);
       it != state.getFile().lineEnd() && drawLine <= win.getHeight();
@@ -25,6 +69,58 @@ void FileText::draw(const State &state){
     if((*it).size() == 0) drawLine++;
     else drawLine+=drawLineWithWrap(*it, drawLine++);
   }
+
+  /*
+  //Draw word highlights over default based on precedence
+  //TODO ensure that colors are in precendence order
+
+  for(auto it = state.getFile().getIndicatorPack().wordIndicators.begin();
+      it != state.getFile().getIndicatorPack().wordIndicators.end();
+      ++it){
+
+        // for(auto jt = it->words.begin(); jt !=it->words.end(); jt++)
+        //   std::cout << "(" << jt->first.x << "," << jt->first.y << ")" << std::endl;
+
+    drawLine = 0;
+
+    //set iterator to find first word that is on line
+    std::vector<std::pair<Pos, size_t>>::const_iterator word = it->words.begin();
+    for(;
+        word != it->words.end() && word->first.y < currentLine;
+        ++word);
+
+    //set appropriate draw color for syntax
+    auto temp = syntaxColorMap.find(word->second);
+    if(temp != syntaxColorMap.end())
+      win.setDrawColor(temp->second);
+
+
+    for(auto it = state.getFile().MakeLineIterator(currentLine);
+        it != state.getFile().lineEnd() && drawLine <= win.getHeight();
+        ++it){
+      if((*it).size() == 0) drawLine++;
+      else drawLine+=drawLineWithWrap(*it, drawLine++, word);
+    }
+  }
+
+  //Draw range highlights on top
+
+  // //First range at or after currentLine
+  // auto currentRange = state.getFile().getIndicatorPack().rangeIndicators.begin();
+  // for(;
+  //     currentRange != state.getFile().getIndicatorPack().rangeIndicators.end() && currentRange->first.y < currentLine;
+  //     ++currentRange);
+  //
+  // drawLine = 0;
+  // int insideRange = -1;
+  //
+  // for(auto it = state.getFile().MakeLineIterator(currentLine);
+  //     it != state.getFile().lineEnd() && drawLine <= win.getHeight();
+  //     ++it){
+  //   if((*it).size() == 0) drawLine++;
+  //   else drawLine+=drawLineWithWrap(*it, drawLine++, currentRange, insideRange);
+  // } //*/
+
 }
 
 }

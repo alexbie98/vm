@@ -7,7 +7,7 @@ namespace vm{
 
   namespace syntax{
 
-    const int DoubleQuotes = 1;
+    const int DoubleQuote = 1;
     const int SingleLineComment = 2;
     const int MultiLineComment = 3;
     const int Keyword = 4;
