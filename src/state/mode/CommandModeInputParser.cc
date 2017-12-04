@@ -26,21 +26,18 @@ namespace vm {
 void CommandModeInputParser::reset(){
 	numBuffer = 0;
 	multiplier = 1;
-	current = nullptr;
-
 }		
 
 void CommandModeInputParser::addEntries(){
-	
-	a = make_unique<SimpleCommand>('a',false, 
+
+	/**
+	commandMap['a'] = make_unique<SimpleCommand>('a',false, 
 		 make_unique<ChangeModeAction>(typeid(InsertMode),0,
 		    make_unique<DirectionalMovementAction>(RIGHT)));
 
-	c = make_unique<CCommand>();
-	d = make_unique<DCommand>();
+	**/
 	
-	//f = make_unique<FCommand>();
-	
+	/**
 	
 	i = make_unique<SimpleCommand>('i', false,
 		make_unique<ChangeModeAction>(typeid(InsertMode)));
@@ -69,30 +66,52 @@ void CommandModeInputParser::addEntries(){
 	colon = make_unique<SimpleCommand>(':', false,
 		make_unique<ChangeModeAction>(typeid(TerminalMode),':'));
 
-	commandMap['a'] = a.get();
-	commandMap['c'] = c.get();
-	commandMap['d'] = d.get();
-	commandMap['i'] = i.get();
-	commandMap['h'] = h.get();
-	commandMap['j'] = j.get();
-	commandMap['k'] = k.get();
-	commandMap['l'] = l.get();
-	commandMap['/'] = slash.get();
-	commandMap['?'] = question.get();
-	commandMap[':'] = colon.get();
-
+**/
 }
 
 CommandModeInputParser::CommandModeInputParser(): numBuffer{0},
-	multiplier{1}, current{nullptr} {
-	addEntries();
+	multiplier{1}, current{unique_ptr<Action>()} {
+		addEntries();
 }
 
 
 unique_ptr<Action> CommandModeInputParser::parseInput(KeyInput* in){
 	int key = in->getKey();
 	
-	cout << numBuffer<< endl;
+	if (!current){
+		if (key >=48 && key<=57){
+			numBuffer = numBuffer*10 + (key-48);
+			return unique_ptr<Action>();
+		}
+		else if (key == 'a') {
+			current = make_unique<ChangeModeAction>(typeid(InsertMode),0,
+					make_unique<DirectionalMovementAction>(RIGHT));
+		}
+		else if (key == 'i') {
+			current = make_unique<ChangeModeAction>(typeid(InsertMode));
+		}
+		else if (key == 'h') {
+			current = make_unique<DirectionalMovementAction>(LEFT);
+		}
+		else if (key == 'j') {
+			current = make_unique<DirectionalMovementAction>(LEFT);
+		}
+		else if (key == 'k') {
+			current = make_unique<DirectionalMovementAction>(LEFT);
+		}
+		else if (key == 'l') {
+			current = make_unique<DirectionalMovementAction>(LEFT);
+		}
+		else if (key == 'w'){
+			current = make_unique<WordMovementAction>();
+		}
+	}
+
+	current->setMultiplier(multiplier);
+	return move(current);
+
+
+	/**
 	if (current == nullptr) {
 		if (key >=48 && key<=57){
 			numBuffer = numBuffer*10 + (key-48);
@@ -138,6 +157,7 @@ unique_ptr<Action> CommandModeInputParser::parseInput(KeyInput* in){
 		}
 	}
 
+	**/
 }
 
 CommandModeInputParser::~CommandModeInputParser(){}
