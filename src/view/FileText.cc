@@ -14,8 +14,13 @@ size_t FileText::drawLineWithWrap(const std::string &s, size_t y, const State &s
   size_t widthAdded = 0;
   size_t x = 0;
 
+  //TODO Make cursor decorator
   Pos fileCursorPos((state.getFile().getCursorPos().x == std::string::npos)? 0:state.getFile().getCursorPos().x,
                     (state.getFile().getCursorPos().y == std::string::npos)? 0:state.getFile().getCursorPos().y);
+
+  if(s.size() == 0 && fileCursorPos.y == currentLine + y && fileCursorPos.x == 0)
+    screenCursorPos = Pos(0,y);
+
 
   for(char c: s){
     if(widthAdded + utils::getCharWidth(c) > windowWidth){
@@ -25,7 +30,7 @@ size_t FileText::drawLineWithWrap(const std::string &s, size_t y, const State &s
     }
     win.drawString(std::string(1, c), widthAdded, y);
     widthAdded+=utils::getCharWidth(c);
-    if(currentLine + y == fileCursorPos.y && x == fileCursorPos.x) screenCursorPos = Pos(x,y);
+    if(currentLine + y == fileCursorPos.y && x == fileCursorPos.x) screenCursorPos = Pos(widthAdded,y);
     x++;
   }
   return linesAdded;
@@ -90,8 +95,8 @@ void FileText::draw(const State &state){
   for(auto it = state.getFile().MakeLineIterator(currentLine);
       it != state.getFile().lineEnd() && drawLine <= win.getHeight();
       ++it){
-    if((*it).size() == 0) drawLine++;
-    else drawLine+=drawLineWithWrap(*it, drawLine,state);
+
+    drawLine+=drawLineWithWrap(*it, drawLine,state);
   }
 
   win.setDrawColor(5);

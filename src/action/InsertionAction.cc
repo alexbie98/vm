@@ -11,7 +11,7 @@ void InsertionAction::doAction(State& context) {
 	context.getFile().addString(toInsert, current);
 }
 
-InsertionAction::InsertionAction(const string& toInsert, size_t multi, 
+InsertionAction::InsertionAction(const string& toInsert, size_t multi,
 		std::unique_ptr<Action> nextAction):
 	TextChangeAction{multi, move(nextAction)},toInsert{toInsert} {}
 
@@ -19,10 +19,9 @@ unique_ptr<Action> InsertionAction::clone() {
 	unique_ptr<Action> nextClone;
 	if (nextClone) nextClone = nextAction->clone();
 	return make_unique<InsertionAction>(toInsert, multi, move(nextClone));
-	
+
 }
 
 InsertionAction::~InsertionAction() {}
 
 }
-

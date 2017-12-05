@@ -28,9 +28,9 @@ unique_ptr<Action> InsertModeInputParser::parseInput(KeyInput* in){
 		case KEY_RIGHT: return make_unique<DirectionalMovementAction>(RIGHT);
 		case KEY_BACKSPACE: return make_unique<DeleteAction>();
 		default: {
-			if (key>=32 && key<=126){ //needs to go in helper
+			if (key<=126){ //needs to go in helper
 				return make_unique<InsertionAction>(
-						string(1,(static_cast<char>(key))));
+						string(1,(static_cast<char>(key))), 1, make_unique<DirectionalMovementAction>(RIGHT));
 			}
 			else return unique_ptr<Action>{};
 		}

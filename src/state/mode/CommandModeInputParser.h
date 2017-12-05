@@ -20,10 +20,10 @@ class CommandModeInputParser : public InputParser{
 	private:
 		size_t numBuffer;
 		size_t multiplier;
-		
+
 		std::map<int, Command*> commandMap;
 		Command * current;
-		
+
 		void addEntries();
 
 
@@ -47,6 +47,7 @@ class CommandModeInputParser : public InputParser{
 		std::unique_ptr<SimpleCommand> w;
 		std::unique_ptr<SimpleCommand> x;
 		//std::unique_ptr<YCommand> y;
+
 		std::unique_ptr<SimpleCommand> A;
 		std::unique_ptr<SimpleCommand> F;
 		std::unique_ptr<SimpleCommand> I;
@@ -79,4 +80,4 @@ class CommandModeInputParser : public InputParser{
 
 }
 
-#endif 
+#endif
